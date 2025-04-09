@@ -1,0 +1,13 @@
+<template id="custom_job_page" name="Custom Job Page">
+    <t t-call="website.layout">
+        <div class="container">
+            <h1>Jobs</h1>
+            <t t-foreach="jobs" t-as="job">
+                <div class="card">
+                    <h2><t t-esc="job.name"/></h2>
+                    <p><t t-esc="job.description"/></p>
+                </div>
+            </t>
+        </div>
+    </t>
+</template>
