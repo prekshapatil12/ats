@@ -7,7 +7,7 @@
           <div class="card">
             <h2><t t-esc="job.name"/></h2>
             <p><t t-esc="job.description"/></p>
-          </div>
+          </div>k
         </t>
       </div>
     </t>
