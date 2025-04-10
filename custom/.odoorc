@@ -1,0 +1,3 @@
+[options]
+admin_passwd = admin
+list_db = True
