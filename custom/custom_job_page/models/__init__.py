@@ -1,1 +1,1 @@
-from . import ats_jobs
+from . import job

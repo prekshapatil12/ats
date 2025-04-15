@@ -1,43 +1,38 @@
-<!-- ats-1/views/job_template.xml -->
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+  <record id="view_custom_job_tree" model="ir.ui.view">
+    <field name="name">custom.job.tree</field>
+    <field name="model">custom.job</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="name"/>
+        <field name="department"/>
+        <field name="is_active"/>
+      </tree>
+    </field>
+  </record>
 
-  <template id="custom_job_page" name="Custom Job Page">
-    <t t-call="website.layout">
-      <div class="container">
-        <h1>Jobs</h1>
-        <t t-foreach="jobs" t-as="job">
-          <div class="card">
-            <h2><t t-esc="job.name"/></h2>
-            <p><t t-esc="job.description"/></p>
-          </div>
-        </t>
-      </div>
-    </t>
-  </template>
+  <record id="view_custom_job_form" model="ir.ui.view">
+    <field name="name">custom.job.form</field>
+    <field name="model">custom.job</field>
+    <field name="arch" type="xml">
+      <form>
+        <group>
+          <field name="name"/>
+          <field name="department"/>
+          <field name="description"/>
+          <field name="is_active"/>
+        </group>
+      </form>
+    </field>
+  </record>
 
-  <data>
+  <record id="action_custom_job" model="ir.actions.act_window">
+    <field name="name">Jobs</field>
+    <field name="res_model">custom.job</field>
+    <field name="view_mode">tree,form</field>
+  </record>
 
- 
-    <template id="custom_job_page" name="Custom Job Page">
-      <t t-call="website.layout">
-        <div class="container">
-          <h1>Jobs</h1>
-          <t t-foreach="jobs" t-as="job">
-            <div class="card">
-              <h2><t t-esc="job.name"/></h2>
-              <p><t t-esc="job.description"/></p>
-            </div>
-        </t>
-    </template>
-
-    <!-- Route to publish the page -->
-    <record id="custom_job_page_route" model="website.page">
-      <field name="name">Custom Job Page</field>
-      <field name="url">/jobs</field> <!-- URL you want -->
-      <field name="view_id" ref="custom_job_page"/>
-      <field name="website_published" eval="True"/>
-    </record>
-
-  </data>
-
+  <menuitem id="custom_job_menu_root" name="Job Management"/>
+  <menuitem id="custom_job_menu" name="Jobs" parent="custom_job_menu_root" action="action_custom_job"/>
 </odoo>

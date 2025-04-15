@@ -1,12 +1,14 @@
 {
-    'name': 'ATS Jobs',
+    'name': 'Custom Job Page',
     'version': '1.0',
-    'summary': 'Job Table for ATS',
-    'description': 'Custom table named jobs for ATS',
-    'category': 'Recruitment',
+    'summary': 'Job posting and listing module for ATS',
     'author': 'Your Name',
     'depends': ['base'],
-    'data': [],
+    'data': [
+        'security/ir.model.access.csv',
+        'views/job_template.xml',
+        'data/ata_data.xml',
+    ],
     'installable': True,
-    'application': False,
+    'application': True,
 }
