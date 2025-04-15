@@ -1,12 +1,12 @@
 {
-    'name': 'Custom Job Page',
+    'name': 'ATS Jobs',
     'version': '1.0',
-    'summary': 'Custom job listing page on website',
-    'category': 'Website',
-    'depends': ['website', 'hr'],
-    'data': [
-        'views/job_template.xml',
-    ],
+    'summary': 'Job Table for ATS',
+    'description': 'Custom table named jobs for ATS',
+    'category': 'Recruitment',
+    'author': 'Your Name',
+    'depends': ['base'],
+    'data': [],
     'installable': True,
     'application': False,
 }

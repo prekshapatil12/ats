@@ -1,28 +1,24 @@
+<!-- ats-1/views/job_template.xml -->
 <odoo>
-  <data>
-
-    <!-- Your original template -->
-    <template id="custom_job_page" name="Custom Job Page">
-      <t t-call="website.layout">
-        <div class="container">
-          <h1>Jobs</h1>
-          <t t-foreach="jobs" t-as="job">
-            <div class="card">
-              <h2><t t-esc="job.name"/></h2>
-              <p><t t-esc="job.description"/></p>
+    <template id="custom_job_page_template" name="Custom Job List">
+        <t t-call="website.layout">
+            <div class="container mt-5 mb-5">
+                <h2>Available Job Openings</h2>
+                <t t-if="jobs">
+                    <ul>
+                        <t t-foreach="jobs" t-as="job">
+                            <li>
+                                <strong><t t-esc="job.name"/></strong><br/>
+                                <span><t t-esc="job.description"/></span><br/>
+                                <em><t t-esc="job.address_id.name if job.address_id else ''"/></em>
+                            </li>
+                        </t>
+                    </ul>
+                </t>
+                <t t-else="">
+                    <p>No jobs found.</p>
+                </t>
             </div>
-          </t>
-        </div>
-      </t>
+        </t>
     </template>
-
-    <!-- Route to publish the page -->
-    <record id="custom_job_page_route" model="website.page">
-      <field name="name">Custom Job Page</field>
-      <field name="url">/jobs</field> <!-- URL you want -->
-      <field name="view_id" ref="custom_job_page"/>
-      <field name="website_published" eval="True"/>
-    </record>
-
-  </data>
 </odoo>
