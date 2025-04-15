@@ -1,0 +1,4 @@
+# ats/custom_addons/jobs_module/security/ir.model.access.csv
+
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ats_jobs,access.ats.jobs,model_ats_jobs,,1,1,1,1

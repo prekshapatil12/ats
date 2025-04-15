@@ -1,0 +1,48 @@
+<!-- ats/custom_addons/jobs_module/views/jobs_views.xml -->
+
+<odoo>
+    <!-- Tree View -->
+    <record id="view_tree_ats_jobs" model="ir.ui.view">
+        <field name="name">ats.jobs.tree</field>
+        <field name="model">ats.jobs</field>
+        <field name="arch" type="xml">
+            <tree string="Jobs">
+                <field name="title"/>
+                <field name="department"/>
+                <field name="location"/>
+                <field name="is_active"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_form_ats_jobs" model="ir.ui.view">
+        <field name="name">ats.jobs.form</field>
+        <field name="model">ats.jobs</field>
+        <field name="arch" type="xml">
+            <form string="Job Posting">
+                <sheet>
+                    <group>
+                        <field name="title"/>
+                        <field name="description"/>
+                        <field name="department"/>
+                        <field name="location"/>
+                        <field name="date_posted"/>
+                        <field name="is_active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_ats_jobs" model="ir.actions.act_window">
+        <field name="name">Jobs</field>
+        <field name="res_model">ats.jobs</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menu -->
+    <menuitem id="menu_ats_root" name="ATS"/>
+    <menuitem id="menu_ats_jobs" name="Jobs" parent="menu_ats_root" action="action_ats_jobs"/>
+</odoo>
