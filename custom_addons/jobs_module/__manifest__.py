@@ -1,19 +1,12 @@
-# ats/custom_addons/jobs_module/__manifest__.py
-
 {
-    'name': 'Jobs Module',
+    'name': 'ATS Jobs',
     'version': '1.0',
-    'summary': 'Manage job postings for the ATS',
-    'description': 'Custom module to manage job listings in the ATS project',
-    'category': 'Human Resources',
-    'author': 'Your Name',
-    'website': 'https://yourcompany.com',
     'depends': ['base'],
-    'data': [
-        'security/ir.model.access.csv',
-        'views/jobs_views.xml',
-    ],
+    'author': 'Your Name or Company',
+    'category': 'Recruitment',
+    'summary': 'Job Posting Table for ATS',
+    'description': 'This module creates a jobs table in the ATS system.',
+    'data': ['views/job_views.xml'],
     'installable': True,
-    'application': True,
     'auto_install': False,
 }
