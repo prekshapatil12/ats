@@ -1,15 +1,14 @@
 {
-    'name': 'Custom Jobs',
+    'name': 'Job API',
     'version': '1.0',
-    'category': 'Website',
-    'summary': 'Job Listing and Application Page',
-    'description': 'Allows recruiters to post jobs and candidates to view them.',
-    'author': 'Your Name',
-    'website': 'https://yourcompany.com',
-    'depends': ['base', 'website'],
+    'summary': 'REST API for job listings',
+    'description': 'Expose RESTful endpoints to interact with job records from a manually created PostgreSQL table.',
+    'depends': ['base'],
     'data': [
-        'views/job_template.xml',
+        'security/security.xml',
+        'security/ir.model.access.csv',
     ],
     'installable': True,
     'application': True,
+    'auto_install': False,
 }

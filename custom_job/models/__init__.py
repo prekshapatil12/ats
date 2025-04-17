@@ -1,1 +1,1 @@
-from . import jobs
+from . import job
