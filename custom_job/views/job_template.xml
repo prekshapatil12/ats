@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<odoo>
-    <!-- Website Job Page Route -->
-    <template id="job_listing_template" name="Job Listings">
-        <t t-call="website.layout">
-            <div class="container my-5">
-                <h1 class="text-center">Available Job Positions</h1>
-                <t t-foreach="jobs" t-as="job">
-                    <div class="card my-3 shadow-sm p-3">
-                        <h3><t t-esc="job.name"/></h3>
-                        <p><strong>Location:</strong> <t t-esc="job.location"/></p>
-                        <p><strong>Department:</strong> <t t-esc="job.department"/></p>
-                        <p><strong>Description:</strong> <t t-esc="job.description"/></p>
-                        <p><strong>Requirements:</strong> <t t-esc="job.requirements"/></p>
-                    </div>
-                </t>
-            </div>
-        </t>
-    </template>
+ <odoo>
+     <!-- Website Job Page Route -->
+     <template id="job_listing_template" name="Job Listings">
+         <t t-call="website.layout">
+             <div class="container my-5">
+                 <h1 class="text-center">Available Job Positions</h1>
+                 <t t-foreach="jobs" t-as="job">
+                     <div class="card my-3 shadow-sm p-3">
+                         <h3><t t-esc="job.name"/></h3>
+                         <p><strong>Location:</strong> <t t-esc="job.location"/></p>
+                         <p><strong>Department:</strong> <t t-esc="job.department"/></p>
+                         <p><strong>Description:</strong> <t t-esc="job.description"/></p>
+                         <p><strong>Requirements:</strong> <t t-esc="job.requirements"/></p>
+                     </div>
+                 </t>
+             </div>
+         </t>
+     </template>
 
-    <!-- Controller Binding -->
-    <record id="action_job_page" model="ir.ui.view">
-        <field name="name">job.page</field>
-        <field name="type">qweb</field>
-        <field name="arch" type="xml">
-            <t t-name="custom_jobs.job_page">
-                <t t-call="custom_jobs.job_listing_template"/>
-            </t>
-        </field>
-    </record>
+     <!-- Controller Binding -->
+     <record id="action_job_page" model="ir.ui.view">
+         <field name="name">job.page</field>
+         <field name="type">qweb</field>
+         <field name="arch" type="xml">
+             <t t-name="custom_jobs.job_page">
+                 <t t-call="custom_jobs.job_listing_template"/>
+             </t>
+         </field>
+     </record>
 
-    <record id="route_job_page" model="website.page">
-        <field name="name">Jobs</field>
-        <field name="url">/jobs</field>
-        <field name="view_id" ref="action_job_page"/>
-    </record>
-</odoo>
+     <record id="route_job_page" model="website.page">
+         <field name="name">Jobs</field>
+         <field name="url">/jobs</field>
+         <field name="view_id" ref="action_job_page"/>
+     </record>
+ </odoo>
