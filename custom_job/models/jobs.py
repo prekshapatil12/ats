@@ -1,6 +1,6 @@
 from odoo import models, fields
  
- class JobListing(models.Model):
+class JobListing(models.Model):
      _name = 'custom.job'
      _description = 'Job Listing'
  

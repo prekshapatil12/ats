@@ -17,7 +17,7 @@
              </div>
          </t>
      </template>
-
+ 
      <!-- Controller Binding -->
      <record id="action_job_page" model="ir.ui.view">
          <field name="name">job.page</field>
@@ -28,7 +28,7 @@
              </t>
          </field>
      </record>
-
+ 
      <record id="route_job_page" model="website.page">
          <field name="name">Jobs</field>
          <field name="url">/jobs</field>
