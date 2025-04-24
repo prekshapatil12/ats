@@ -1,6 +1,9 @@
 from odoo import http
 from odoo.http import request
 
+import logging
+_logger = logging.getLogger(__name__)
+
 class RestApiDemo(http.Controller):
 
     @http.route('/api/partners', auth='public', type='json', methods=['GET'], csrf=False)
@@ -29,3 +32,14 @@ class RestApiDemo(http.Controller):
             'name': partner.name,
             'email': partner.email
         }
+
+
+class JobWebsite(http.Controller):
+
+    @http.route('/jobs', type='http', auth='public', website=True)
+    def list_jobs(self, **kwargs):
+        jobs = request.env['custom.job'].sudo().search([('is_published', '=', True)])
+        _logger.info(f"Loaded {len(jobs)} jobs for display on /jobs page.")
+        return request.render('custom_job.job_listing_template', {
+            'jobs': jobs
+        })
