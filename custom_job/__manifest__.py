@@ -7,9 +7,6 @@
     'author': 'Your Name',
     'website': 'https://yourcompany.com',
     'depends': ['base', 'website'],
-    'data': [
-        'views/job_template.xml',
-    ],
     'installable': True,
-    'application': True,
+    'application': False,
 }
