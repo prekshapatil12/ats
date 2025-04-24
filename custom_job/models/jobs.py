@@ -9,4 +9,4 @@ class JobListing(models.Model):
      department = fields.Char(string='Department')
      description = fields.Text(string='Job Description')
      requirements = fields.Text(string='Requirements')
-     is_published = fields.Boolean(string='Published', default=True)
+     is_published = fields.Boolean(string='Published', default=True) 
