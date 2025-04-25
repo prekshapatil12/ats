@@ -1,66 +1,100 @@
+# controllers.py
 from odoo import http
 from odoo.http import request
 
-class RestApiDemo(http.Controller):
+class JobController(http.Controller):
 
-    @http.route('/api/partners', auth='public', type='json', methods=['GET'], csrf=False)
-    def get_partners(self):
-        # You can adjust the model search to include the necessary fields if you want to filter or limit results
-        partners = request.env['res.partner'].sudo().search([], limit=10)
-        return [
-            {
-                'id': p.id,
-                'name': p.name,
-                'email': p.email,
-                'job_title': p.job_title,
-                'company': p.company,
-                'work_place': p.work_place,
-                'job_location': p.job_location,
-                'employment_type': p.employment_type,
-                'job_description': p.job_description,
-                'skills': p.skills,
-            } for p in partners
-        ]
+    @http.route('/jobs', type='json', auth='public', methods=['GET'], csrf=False)
+    def get_jobs(self):
+        jobs = request.env['your_module.job'].search([])  # Fetch all jobs
+        job_list = []
+        for job in jobs:
+            job_list.append({
+                'job_id': job.job_id,
+                'job_title': job.job_title,
+                'experience': job.experience,
+                'responsibilities': job.responsibilities,
+                'requirement': job.requirement,
+                'skills': job.skills,
+                'status': job.status,
+                'workplace_type': job.workplace_type,
+                'shift': job.shift,
+                'company': job.company,
+                'location': job.location,
+                'salary': job.salary,
+                'posted_date': job.posted_date,
+                'joining_tentative_date': job.joining_tentative_date,
+            })
+        return job_list
 
-    @http.route('/api/partners', auth='public', type='json', methods=['POST'], csrf=False)
-    def create_partner(self, **kwargs):
-        # Collect job-related fields from request data
-        name = kwargs.get('name')
-        email = kwargs.get('email')
-        job_title = kwargs.get('job_title')
-        company = kwargs.get('company')
-        work_place = kwargs.get('work_place')
-        job_location = kwargs.get('job_location')
-        employment_type = kwargs.get('employment_type')
-        job_description = kwargs.get('job_description')
-        skills = kwargs.get('skills')
+    @http.route('/jobs/<int:job_id>', type='json', auth='public', methods=['GET'], csrf=False)
+    def get_job(self, job_id):
+        job = request.env['your_module.job'].search([('job_id', '=', job_id)], limit=1)
+        if job:
+            return {
+                'job_id': job.job_id,
+                'job_title': job.job_title,
+                'experience': job.experience,
+                'responsibilities': job.responsibilities,
+                'requirement': job.requirement,
+                'skills': job.skills,
+                'status': job.status,
+                'workplace_type': job.workplace_type,
+                'shift': job.shift,
+                'company': job.company,
+                'location': job.location,
+                'salary': job.salary,
+                'posted_date': job.posted_date,
+                'joining_tentative_date': job.joining_tentative_date,
+            }
+        return {'error': 'Job not found'}
 
-        if not name:
-            return {'error': 'Name is required'}
-
-        # Create the partner with the additional job-related fields
-        partner = request.env['res.partner'].sudo().create({
-            'name': name,
-            'email': email,
-            'job_title': job_title,
-            'company': company,
-            'work_place': work_place,
-            'job_location': job_location,
-            'employment_type': employment_type,
-            'job_description': job_description,
-            'skills': skills,
+    @http.route('/jobs', type='json', auth='public', methods=['POST'], csrf=False)
+    def create_job(self, **kwargs):
+        job = request.env['your_module.job'].create({
+            'job_id': kwargs.get('job_id'),
+            'job_title': kwargs.get('job_title'),
+            'experience': kwargs.get('experience'),
+            'responsibilities': kwargs.get('responsibilities'),
+            'requirement': kwargs.get('requirement'),
+            'skills': kwargs.get('skills'),
+            'status': kwargs.get('status'),
+            'workplace_type': kwargs.get('workplace_type'),
+            'shift': kwargs.get('shift'),
+            'company': kwargs.get('company'),
+            'location': kwargs.get('location'),
+            'salary': kwargs.get('salary'),
+            'posted_date': kwargs.get('posted_date'),
+            'joining_tentative_date': kwargs.get('joining_tentative_date'),
         })
+        return {'message': 'Job created successfully', 'job_id': job.job_id}
 
-        # Return the created partner details, including the job-related fields
-        return {
-            'id': partner.id,
-            'name': partner.name,
-            'email': partner.email,
-            'job_title': partner.job_title,
-            'company': partner.company,
-            'work_place': partner.work_place,
-            'job_location': partner.job_location,
-            'employment_type': partner.employment_type,
-            'job_description': partner.job_description,
-            'skills': partner.skills,
-        }
+    @http.route('/jobs/<int:job_id>', type='json', auth='public', methods=['PUT'], csrf=False)
+    def update_job(self, job_id, **kwargs):
+        job = request.env['your_module.job'].search([('job_id', '=', job_id)], limit=1)
+        if job:
+            job.write({
+                'job_title': kwargs.get('job_title', job.job_title),
+                'experience': kwargs.get('experience', job.experience),
+                'responsibilities': kwargs.get('responsibilities', job.responsibilities),
+                'requirement': kwargs.get('requirement', job.requirement),
+                'skills': kwargs.get('skills', job.skills),
+                'status': kwargs.get('status', job.status),
+                'workplace_type': kwargs.get('workplace_type', job.workplace_type),
+                'shift': kwargs.get('shift', job.shift),
+                'company': kwargs.get('company', job.company),
+                'location': kwargs.get('location', job.location),
+                'salary': kwargs.get('salary', job.salary),
+                'posted_date': kwargs.get('posted_date', job.posted_date),
+                'joining_tentative_date': kwargs.get('joining_tentative_date', job.joining_tentative_date),
+            })
+            return {'message': 'Job updated successfully'}
+        return {'error': 'Job not found'}
+
+    @http.route('/jobs/<int:job_id>', type='json', auth='public', methods=['PATCH'], csrf=False)
+    def patch_job(self, job_id, **kwargs):
+        job = request.env['your_module.job'].search([('job_id', '=', job_id)], limit=1)
+        if job:
+            job.write(kwargs)
+            return {'message': 'Job patched successfully'}
+        return {'error': 'Job not found'}
