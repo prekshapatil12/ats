@@ -2,8 +2,8 @@
 from odoo import models, fields
 
 class Job(models.Model):
-    _name = 'your_module.job'  # Odoo model name
-    _table = 'jobs'  # This is the PostgreSQL table name you're working with
+    _name = 'job.postings'  # Odoo model name
+    _table = 'job_postings'  # This is the PostgreSQL table name you're working with
 
     job_id = fields.Integer(string='Job ID', required=True)
     job_title = fields.Char(string='Job Title')
