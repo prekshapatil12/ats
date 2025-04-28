@@ -6,7 +6,7 @@ class JobController(http.Controller):
 
     @http.route('/jobs', type='json', auth='public', methods=['GET'], csrf=False)
     def get_jobs(self):
-        jobs = request.env['jjobs.postings'].search([])  
+        jobs = request.env['jobs.postings'].search([])  
         job_list = []
         for job in jobs:
             job_list.append({
