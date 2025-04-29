@@ -1,12 +1,32 @@
 {
-    'name': 'Custom Jobs',
-    'version': '1.0',
+    'name': 'Custom Job Portal',
+    'version': '1.0.0',
     'category': 'Website',
-    'summary': 'Job Listing and Application Page',
-    'description': 'Allows recruiters to post jobs and candidates to view them.',
-    'author': 'Your Name',
+    'summary': 'Job Listings and Applications for Recruiters and Candidates',
+    'description': """
+Custom Job Portal
+==================
+This module allows recruiters to post job vacancies and candidates to view and apply for them through the website.
+Features:
+- Job listing page
+- Job details view
+- API endpoint for job data
+""",
+    'author': 'Preksha Patil',
     'website': 'https://yourcompany.com',
+    'license': 'LGPL-3',
     'depends': ['base', 'website'],
+    'data': [
+        # Add your access rights, views, and data files here
+        'security/ir.model.access.csv',
+     
+    ],
+    'assets': {
+        'web.assets_frontend': [
+            # Include CSS/JS files if needed
+        ],
+    },
     'installable': True,
-    'application': False,
+    'application': True,
+    'auto_install': False,
 }
