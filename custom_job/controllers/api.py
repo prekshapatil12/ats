@@ -32,6 +32,6 @@ class JobAPIController(http.Controller):
         except Exception as e:
             return Response(
                 json.dumps({'status': 500, 'error': str(e)}),
-                content_type='application/json',
+                content_type='application/json', 
                 status=500
             )
