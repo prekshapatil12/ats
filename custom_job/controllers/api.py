@@ -65,34 +65,59 @@ class JobAPIController(http.Controller):
         except Exception as e:
             return {'status': 500, 'error': str(e)}
 
-@http.route('/api/jobs', type='json', auth='public', methods=['POST'], csrf=False)
-def create_job(self, **params):
-    try:
-        required_fields = ['job_title', 'experience', 'skills', 'status', 'company', 'location', 'posted_date', 'joining_tentative_date']
-        missing_fields = [field for field in required_fields if field not in params or not params[field]]
-        if missing_fields:
-            return {'status': 400, 'error': f'Missing required fields: {", ".join(missing_fields)}'}
+  @http.route('/api/jobs', type='json', auth='public', methods=['POST'], csrf=False)
+    def create_job(self, **params):
+        try:
+            # Define required fields
+            required_fields = [
+                'job_title', 'experience', 'skills', 'status',
+                'company', 'location', 'posted_date', 'joining_tentative_date'
+            ]
+            # Check for missing fields
+            missing_fields = [field for field in required_fields if not params.get(field)]
+            if missing_fields:
+                return {
+                    'status': 400,
+                    'error': f'Missing required fields: {", ".join(missing_fields)}'
+                }
 
-        job = request.env['job.postings'].sudo().create({
-            'job_title': params.get('job_title'),
-            'experience': params.get('experience'),
-            'skills': params.get('skills'),
-            'status': params.get('status'),
-            'workplace_type': params.get('workplace_type'),
-            'shift': params.get('shift'),
-            'company': params.get('company'),
-            'location': params.get('location'),
-            'posted_date': params.get('posted_date'),
-            'joining_tentative_date': params.get('joining_tentative_date'),
-            'responsibilities': params.get('responsibilities'),
-            'requirement': params.get('requirement'),
-            'salary': params.get('salary'),
-        })
+            # Parse date fields
+            try:
+                posted_date = datetime.strptime(params.get('posted_date'), '%Y-%m-%d').date()
+                joining_tentative_date = datetime.strptime(params.get('joining_tentative_date'), '%Y-%m-%d').date()
+            except ValueError:
+                return {
+                    'status': 400,
+                    'error': 'Invalid date format. Use YYYY-MM-DD for posted_date and joining_tentative_date.'
+                }
 
-        return {'status': 201, 'message': 'Job created', 'job_id': job.id}
-    except Exception as e:
-        return {'status': 500, 'error': str(e)}
+            # Create the job posting
+            job = request.env['job.postings'].sudo().create({
+                'job_title': params.get('job_title'),
+                'experience': params.get('experience'),
+                'skills': params.get('skills'),
+                'status': params.get('status'),
+                'workplace_type': params.get('workplace_type'),
+                'shift': params.get('shift'),
+                'company': params.get('company'),
+                'location': params.get('location'),
+                'posted_date': posted_date,
+                'joining_tentative_date': joining_tentative_date,
+                'responsibilities': params.get('responsibilities'),
+                'requirement': params.get('requirement'),
+                'salary': params.get('salary'),
+            })
 
+            return {
+                'status': 201,
+                'message': 'Job created successfully',
+                'job_id': job.id
+            }
+        except Exception as e:
+            return {
+                'status': 500,
+                'error': str(e)
+            }
         try:
             # Validate required fields
             required_fields = ['job_title', 'experience', 'skills', 'status', 'company', 'location', 'posted_date', 'joining_tentative_date']
