@@ -72,7 +72,7 @@ class JobAPIController(http.Controller):
         try:
             # Define required fields
             required_fields = [
-                'job_title', 'experience', 'skills', 'status',
+                'job_id','job_title', 'experience', 'skills', 'status',
                 'company', 'location', 'posted_date', 'joining_tentative_date'
             ]
             # Check for missing fields
@@ -95,6 +95,7 @@ class JobAPIController(http.Controller):
 
             # Create the job posting
             job = request.env['job.postings'].sudo().create({
+                'job_id': params.get('job_id'),
                 'job_title': params.get('job_title'),
                 'experience': params.get('experience'),
                 'skills': params.get('skills'),
