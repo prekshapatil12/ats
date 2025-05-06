@@ -35,18 +35,20 @@
 #                 content_type='application/json', 
 #                 status=500
 #             )
+
 from odoo import http
 from odoo.http import request
+from datetime import datetime
 import json
 
 class JobAPIController(http.Controller):
-    
+
     @http.route('/api/jobs', type='json', auth='public', methods=['GET'], csrf=False)
     def get_jobs(self, **kwargs):
         try:
             jobs = request.env['job.postings'].sudo().search([])
             job_list = [{
-                'job_id': job.job_id,
+                'job_id': job.id,
                 'job_title': job.job_title,
                 'experience': job.experience,
                 'responsibilities': job.responsibilities,
@@ -58,14 +60,14 @@ class JobAPIController(http.Controller):
                 'company': job.company,
                 'location': job.location,
                 'salary': job.salary,
-                'posted_date': str(job.posted_date),
-                'joining_tentative_date': str(job.joining_tentative_date),
+                'posted_date': job.posted_date.strftime('%Y-%m-%d') if job.posted_date else None,
+                'joining_tentative_date': job.joining_tentative_date.strftime('%Y-%m-%d') if job.joining_tentative_date else None,
             } for job in jobs]
             return {'status': 200, 'data': job_list}
         except Exception as e:
             return {'status': 500, 'error': str(e)}
 
-  @http.route('/api/jobs', type='json', auth='public', methods=['POST'], csrf=False)
+    @http.route('/api/jobs', type='json', auth='public', methods=['POST'], csrf=False)
     def create_job(self, **params):
         try:
             # Define required fields
@@ -118,33 +120,6 @@ class JobAPIController(http.Controller):
                 'status': 500,
                 'error': str(e)
             }
-        try:
-            # Validate required fields
-            required_fields = ['job_title', 'experience', 'skills', 'status', 'company', 'location', 'posted_date', 'joining_tentative_date']
-            missing_fields = [field for field in required_fields if field not in kwargs or not kwargs[field]]
-            if missing_fields:
-                return {'status': 400, 'error': f'Missing required fields: {", ".join(missing_fields)}'}
-            
-            # Create job posting (job_id will be auto-generated if it's an auto-increment field)
-            job = request.env['job.postings'].sudo().create({
-                'job_title': kwargs.get('job_title'),
-                'experience': kwargs.get('experience'),
-                'skills': kwargs.get('skills'),
-                'status': kwargs.get('status'),
-                'workplace_type': kwargs.get('workplace_type'),
-                'shift': kwargs.get('shift'),
-                'company': kwargs.get('company'),
-                'location': kwargs.get('location'),
-                'posted_date': kwargs.get('posted_date'),
-                'joining_tentative_date': kwargs.get('joining_tentative_date'),
-                'responsibilities': kwargs.get('responsibilities'),
-                'requirement': kwargs.get('requirement'),
-                'salary': kwargs.get('salary'),
-            })
-
-            return {'status': 201, 'message': 'Job created', 'job_id': job.id}
-        except Exception as e:
-            return {'status': 500, 'error': str(e)}
 
     @http.route('/api/jobs/<int:job_id>', type='json', auth='public', methods=['PUT'], csrf=False)
     def update_job_put(self, job_id, **kwargs):
@@ -152,7 +127,7 @@ class JobAPIController(http.Controller):
             job = request.env['job.postings'].sudo().browse(job_id)
             if not job.exists():
                 return {'status': 404, 'message': 'Job not found'}
-            job.write(kwargs)  # Overwrites fields
+            job.write(kwargs)
             return {'status': 200, 'message': 'Job updated'}
         except Exception as e:
             return {'status': 500, 'error': str(e)}
@@ -163,7 +138,7 @@ class JobAPIController(http.Controller):
             job = request.env['job.postings'].sudo().browse(job_id)
             if not job.exists():
                 return {'status': 404, 'message': 'Job not found'}
-            job.write(kwargs)  # Partially updates fields
+            job.write(kwargs)
             return {'status': 200, 'message': 'Job partially updated'}
         except Exception as e:
             return {'status': 500, 'error': str(e)}
