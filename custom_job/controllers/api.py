@@ -35,12 +35,12 @@
 #                 content_type='application/json', 
 #                 status=500
 #             )
-
 from odoo import http
-from odoo.http import request, Response
+from odoo.http import request
 import json
 
 class JobAPIController(http.Controller):
+    
     @http.route('/api/jobs', type='json', auth='public', methods=['GET'], csrf=False)
     def get_jobs(self, **kwargs):
         try:
@@ -68,7 +68,29 @@ class JobAPIController(http.Controller):
     @http.route('/api/jobs', type='json', auth='public', methods=['POST'], csrf=False)
     def create_job(self, **kwargs):
         try:
-            job = request.env['job.postings'].sudo().create(kwargs)
+            # Validate required fields
+            required_fields = ['job_title', 'experience', 'skills', 'status', 'company', 'location', 'posted_date', 'joining_tentative_date']
+            missing_fields = [field for field in required_fields if field not in kwargs or not kwargs[field]]
+            if missing_fields:
+                return {'status': 400, 'error': f'Missing required fields: {", ".join(missing_fields)}'}
+            
+            # Create job posting (job_id will be auto-generated if it's an auto-increment field)
+            job = request.env['job.postings'].sudo().create({
+                'job_title': kwargs.get('job_title'),
+                'experience': kwargs.get('experience'),
+                'skills': kwargs.get('skills'),
+                'status': kwargs.get('status'),
+                'workplace_type': kwargs.get('workplace_type'),
+                'shift': kwargs.get('shift'),
+                'company': kwargs.get('company'),
+                'location': kwargs.get('location'),
+                'posted_date': kwargs.get('posted_date'),
+                'joining_tentative_date': kwargs.get('joining_tentative_date'),
+                'responsibilities': kwargs.get('responsibilities'),
+                'requirement': kwargs.get('requirement'),
+                'salary': kwargs.get('salary'),
+            })
+
             return {'status': 201, 'message': 'Job created', 'job_id': job.id}
         except Exception as e:
             return {'status': 500, 'error': str(e)}
