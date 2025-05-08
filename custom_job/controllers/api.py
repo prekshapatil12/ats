@@ -67,8 +67,54 @@ class JobAPIController(http.Controller):
         except Exception as e:
             return {'status': 500, 'error': str(e)}
 
-    @http.route('/api/jobs', type='json', auth='public', methods=['POST'], csrf=False)
-    def create_job(self, **params):
+
+@http.route('/api/jobs', type='http', auth='public', methods=['POST'], csrf=False)
+def create_job(self, **kwargs):
+    try:
+        # Load JSON from request body
+        data = json.loads(request.httprequest.data)
+
+        required_fields = [
+            'job_id','job_title', 'experience', 'skills', 'status',
+            'company', 'location', 'posted_date', 'joining_tentative_date'
+        ]
+        missing_fields = [field for field in required_fields if not data.get(field)]
+        if missing_fields:
+            return request.make_response(
+                json.dumps({'status': 400, 'error': f'Missing required fields: {", ".join(missing_fields)}'}),
+                headers=[('Content-Type', 'application/json')]
+            )
+
+        posted_date = datetime.strptime(data.get('posted_date'), '%Y-%m-%d').date()
+        joining_tentative_date = datetime.strptime(data.get('joining_tentative_date'), '%Y-%m-%d').date()
+
+        job = request.env['job.postings'].sudo().create({
+            'job_id': data.get('job_id'),
+            'job_title': data.get('job_title'),
+            'experience': data.get('experience'),
+            'skills': data.get('skills'),
+            'status': data.get('status'),
+            'workplace_type': data.get('workplace_type'),
+            'shift': data.get('shift'),
+            'company': data.get('company'),
+            'location': data.get('location'),
+            'posted_date': posted_date,
+            'joining_tentative_date': joining_tentative_date,
+            'responsibilities': data.get('responsibilities'),
+            'requirement': data.get('requirement'),
+            'salary': data.get('salary'),
+        })
+
+        return request.make_response(
+            json.dumps({'status': 201, 'message': 'Job created successfully', 'job_id': job.id}),
+            headers=[('Content-Type', 'application/json')]
+        )
+    except Exception as e:
+        return request.make_response(
+            json.dumps({'status': 500, 'error': str(e)}),
+            headers=[('Content-Type', 'application/json')]
+        )
+
         try:
             # Define required fields
             required_fields = [
@@ -121,36 +167,3 @@ class JobAPIController(http.Controller):
                 'status': 500,
                 'error': str(e)
             }
-
-    @http.route('/api/jobs/<int:job_id>', type='json', auth='public', methods=['PUT'], csrf=False)
-    def update_job_put(self, job_id, **kwargs):
-        try:
-            job = request.env['job.postings'].sudo().browse(job_id)
-            if not job.exists():
-                return {'status': 404, 'message': 'Job not found'}
-            job.write(kwargs)
-            return {'status': 200, 'message': 'Job updated'}
-        except Exception as e:
-            return {'status': 500, 'error': str(e)}
-
-    @http.route('/api/jobs/<int:job_id>', type='json', auth='public', methods=['PATCH'], csrf=False)
-    def update_job_patch(self, job_id, **kwargs):
-        try:
-            job = request.env['job.postings'].sudo().browse(job_id)
-            if not job.exists():
-                return {'status': 404, 'message': 'Job not found'}
-            job.write(kwargs)
-            return {'status': 200, 'message': 'Job partially updated'}
-        except Exception as e:
-            return {'status': 500, 'error': str(e)}
-
-    @http.route('/api/jobs/<int:job_id>', type='json', auth='public', methods=['DELETE'], csrf=False)
-    def delete_job(self, job_id, **kwargs):
-        try:
-            job = request.env['job.postings'].sudo().browse(job_id)
-            if not job.exists():
-                return {'status': 404, 'message': 'Job not found'}
-            job.unlink()
-            return {'status': 200, 'message': 'Job deleted'}
-        except Exception as e:
-            return {'status': 500, 'error': str(e)}
