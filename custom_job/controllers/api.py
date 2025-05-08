@@ -70,100 +70,48 @@ class JobAPIController(http.Controller):
 
 @http.route('/api/jobs', type='http', auth='public', methods=['POST'], csrf=False)
 def create_job(self, **kwargs):
-    try:
-        # Load JSON from request body
-        data = json.loads(request.httprequest.data)
-
-        required_fields = [
-            'job_id','job_title', 'experience', 'skills', 'status',
-            'company', 'location', 'posted_date', 'joining_tentative_date'
-        ]
-        missing_fields = [field for field in required_fields if not data.get(field)]
-        if missing_fields:
-            return request.make_response(
-                json.dumps({'status': 400, 'error': f'Missing required fields: {", ".join(missing_fields)}'}),
-                headers=[('Content-Type', 'application/json')]
-            )
-
-        posted_date = datetime.strptime(data.get('posted_date'), '%Y-%m-%d').date()
-        joining_tentative_date = datetime.strptime(data.get('joining_tentative_date'), '%Y-%m-%d').date()
-
-        job = request.env['job.postings'].sudo().create({
-            'job_id': data.get('job_id'),
-            'job_title': data.get('job_title'),
-            'experience': data.get('experience'),
-            'skills': data.get('skills'),
-            'status': data.get('status'),
-            'workplace_type': data.get('workplace_type'),
-            'shift': data.get('shift'),
-            'company': data.get('company'),
-            'location': data.get('location'),
-            'posted_date': posted_date,
-            'joining_tentative_date': joining_tentative_date,
-            'responsibilities': data.get('responsibilities'),
-            'requirement': data.get('requirement'),
-            'salary': data.get('salary'),
-        })
-
-        return request.make_response(
-            json.dumps({'status': 201, 'message': 'Job created successfully', 'job_id': job.id}),
-            headers=[('Content-Type', 'application/json')]
-        )
-    except Exception as e:
-        return request.make_response(
-            json.dumps({'status': 500, 'error': str(e)}),
-            headers=[('Content-Type', 'application/json')]
-        )
-
         try:
-            # Define required fields
+            # Load JSON from request body
+            data = json.loads(request.httprequest.data)
+
             required_fields = [
                 'job_id','job_title', 'experience', 'skills', 'status',
                 'company', 'location', 'posted_date', 'joining_tentative_date'
             ]
-            # Check for missing fields
-            missing_fields = [field for field in required_fields if not params.get(field)]
+            missing_fields = [field for field in required_fields if not data.get(field)]
             if missing_fields:
-                return {
-                    'status': 400,
-                    'error': f'Missing required fields: {", ".join(missing_fields)}'
-                }
+                return request.make_response(
+                    json.dumps({'status': 400, 'error': f'Missing required fields: {", ".join(missing_fields)}'}),
+                    headers=[('Content-Type', 'application/json')]
+                )
 
-            # Parse date fields
-            try:
-                posted_date = datetime.strptime(params.get('posted_date'), '%Y-%m-%d').date()
-                joining_tentative_date = datetime.strptime(params.get('joining_tentative_date'), '%Y-%m-%d').date()
-            except ValueError:
-                return {
-                    'status': 400,
-                    'error': 'Invalid date format. Use YYYY-MM-DD for posted_date and joining_tentative_date.'
-                }
+            posted_date = datetime.strptime(data.get('posted_date'), '%Y-%m-%d').date()
+            joining_tentative_date = datetime.strptime(data.get('joining_tentative_date'), '%Y-%m-%d').date()
 
-            # Create the job posting
             job = request.env['job.postings'].sudo().create({
-                'job_id': params.get('job_id'),
-                'job_title': params.get('job_title'),
-                'experience': params.get('experience'),
-                'skills': params.get('skills'),
-                'status': params.get('status'),
-                'workplace_type': params.get('workplace_type'),
-                'shift': params.get('shift'),
-                'company': params.get('company'),
-                'location': params.get('location'),
+                'job_id': data.get('job_id'),
+                'job_title': data.get('job_title'),
+                'experience': data.get('experience'),
+                'skills': data.get('skills'),
+                'status': data.get('status'),
+                'workplace_type': data.get('workplace_type'),
+                'shift': data.get('shift'),
+                'company': data.get('company'),
+                'location': data.get('location'),
                 'posted_date': posted_date,
                 'joining_tentative_date': joining_tentative_date,
-                'responsibilities': params.get('responsibilities'),
-                'requirement': params.get('requirement'),
-                'salary': params.get('salary'),
+                'responsibilities': data.get('responsibilities'),
+                'requirement': data.get('requirement'),
+                'salary': data.get('salary'),
             })
 
-            return {
-                'status': 201,
-                'message': 'Job created successfully',
-                'job_id': job.id
-            }
+            return request.make_response(
+                json.dumps({'status': 201, 'message': 'Job created successfully', 'job_id': job.id}),
+                headers=[('Content-Type', 'application/json')]
+            )
+
         except Exception as e:
-            return {
-                'status': 500,
-                'error': str(e)
-            }
+            return request.make_response(
+                json.dumps({'status': 500, 'error': str(e)}),
+                headers=[('Content-Type', 'application/json')]
+            )
