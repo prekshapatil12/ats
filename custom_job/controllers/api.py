@@ -67,12 +67,10 @@ class JobAPIController(http.Controller):
         except Exception as e:
             return {'status': 500, 'error': str(e)}
 
-
-@http.route('/api/jobs', type='http', auth='public', methods=['POST'], csrf=False)
-def create_job(self, **kwargs):
+    @http.route('/api/jobs', type='json', auth='public', methods=['POST'], csrf=False)
+    def create_job(self, **kwargs):
         try:
-            # Load JSON from request body
-            data = json.loads(request.httprequest.data)
+            data = kwargs  # Since type='json', kwargs contains the parsed JSON data
 
             required_fields = [
                 'job_id','job_title', 'experience', 'skills', 'status',
@@ -80,10 +78,7 @@ def create_job(self, **kwargs):
             ]
             missing_fields = [field for field in required_fields if not data.get(field)]
             if missing_fields:
-                return request.make_response(
-                    json.dumps({'status': 400, 'error': f'Missing required fields: {", ".join(missing_fields)}'}),
-                    headers=[('Content-Type', 'application/json')]
-                )
+                return {'status': 400, 'error': f'Missing required fields: {", ".join(missing_fields)}'}
 
             posted_date = datetime.strptime(data.get('posted_date'), '%Y-%m-%d').date()
             joining_tentative_date = datetime.strptime(data.get('joining_tentative_date'), '%Y-%m-%d').date()
@@ -105,13 +100,7 @@ def create_job(self, **kwargs):
                 'salary': data.get('salary'),
             })
 
-            return request.make_response(
-                json.dumps({'status': 201, 'message': 'Job created successfully', 'job_id': job.id}),
-                headers=[('Content-Type', 'application/json')]
-            )
+            return {'status': 201, 'message': 'Job created successfully', 'job_id': job.id}
 
         except Exception as e:
-            return request.make_response(
-                json.dumps({'status': 500, 'error': str(e)}),
-                headers=[('Content-Type', 'application/json')]
-            )
+            return {'status': 500, 'error': str(e)}
