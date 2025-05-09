@@ -15,15 +15,16 @@ Features:
     'author': 'Preksha Patil',
     'website': 'https://yourcompany.com',
     'license': 'LGPL-3',
-    'depends': ['base', 'website'],
+    'depends': ['base', 'website'],  # Include other modules if needed
     'data': [
-        # Add your access rights, views, and data files here
-        'security/ir.model.access.csv',
-     
+        'security/ir.model.access.csv',  # Security rights
+        'views/job_postings_views.xml',  # Add views for the job postings
+        'views/job_postings_templates.xml',  # Add templates if any
     ],
     'assets': {
         'web.assets_frontend': [
-            # Include CSS/JS files if needed
+            'custom_job_portal/static/src/css/styles.css',  # Custom CSS
+            'custom_job_portal/static/src/js/scripts.js',   # Custom JS
         ],
     },
     'installable': True,
