@@ -18,8 +18,6 @@ Features:
     'depends': ['base', 'website'],  # Include other modules if needed
     'data': [
         'security/ir.model.access.csv',  # Security rights
-        'views/job_postings_views.xml',  # Add views for the job postings
-        'views/job_postings_templates.xml',  # Add templates if any
     ],
     'assets': {
         'web.assets_frontend': [
