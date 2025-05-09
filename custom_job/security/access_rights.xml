@@ -7,13 +7,13 @@
             <field name="model_id" ref="model_job_postings"/>
             <field name="group_id" eval="False"/> <!-- Public access -->
             <field name="perm_read" eval="1"/>
-            <field name="perm_write" eval="0"/>
-            <field name="perm_create" eval="0"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
             <field name="perm_unlink" eval="0"/>
         </record>
 
         <!-- Allow public access to create and write job.postings -->
-        <record id="job_postings_public_write_access" model="ir.model.access">
+        <!-- <record id="job_postings_public_write_access" model="ir.model.access"> -->
             <field name="name">job.postings public write access</field>
             <field name="model_id" ref="model_job_postings"/>
             <field name="group_id" eval="False"/> <!-- Public access -->
@@ -21,7 +21,7 @@
             <field name="perm_write" eval="1"/>
             <field name="perm_create" eval="1"/>
             <field name="perm_unlink" eval="0"/>
-        </record>
+        <!-- </record> -->
 
     </data>
 </odoo>
