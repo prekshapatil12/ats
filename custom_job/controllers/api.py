@@ -37,11 +37,12 @@ class JobAPIController(http.Controller):
             )
 
 
-    @http.route('/api/jobs', type='json', auth='public', methods=['POST'], csrf=False)
-    def create_job(self, **data):
+       @http.route('/api/jobs', type='json', auth='public', methods=['POST'], csrf=False)
+    def create_job(self):
         try:
-            # Print the received data for debugging
-            print("Received POST data:", data)
+            data = request.jsonrequest  # This ensures we correctly parse the JSON body
+
+            _logger.info("Received job POST data: %s", data)
 
             required_fields = [
                 'job_id', 'job_title', 'experience', 'skills', 'status',
@@ -50,8 +51,12 @@ class JobAPIController(http.Controller):
             missing_fields = [field for field in required_fields if not data.get(field)]
             if missing_fields:
                 return {
-                    'status': 400,
-                    'error': f'Missing required fields: {", ".join(missing_fields)}'
+                    'jsonrpc': '2.0',
+                    'id': None,
+                    'result': {
+                        'status': 400,
+                        'error': f"Missing required fields: {', '.join(missing_fields)}"
+                    }
                 }
 
             # Parse dates
@@ -76,13 +81,22 @@ class JobAPIController(http.Controller):
             })
 
             return {
-                'status': 201,
-                'message': 'Job created successfully',
-                'job_id': job.id
+                'jsonrpc': '2.0',
+                'id': None,
+                'result': {
+                    'status': 201,
+                    'message': 'Job created successfully',
+                    'job_id': job.id
+                }
             }
 
         except Exception as e:
+            _logger.exception("Job creation failed")
             return {
-                'status': 500,
-                'error': str(e)
+                'jsonrpc': '2.0',
+                'id': None,
+                'result': {
+                    'status': 500,
+                    'error': str(e)
+                }
             }
