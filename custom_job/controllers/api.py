@@ -2,9 +2,8 @@ from odoo import http
 from odoo.http import request
 from datetime import datetime
 import json
-import logging
 
-_logger = logging.getLogger(__name__)
+
 
 class JobAPIController(http.Controller):
 
