@@ -34,10 +34,11 @@ class JobAPIController(http.Controller):
     @http.route('/api/jobs', type='json', auth='public', methods=['POST'], csrf=False)
     def create_job(self, **kwargs):
         """
-        Create a new job posting.
+        Create a new job posting (expects raw JSON).
         """
         try:
-            job_data = request.jsonrequest
+            # Safely parse raw JSON from the body
+            job_data = json.loads(request.httprequest.data.decode('utf-8'))
 
             required_fields = [
                 'job_id', 'job_title', 'experience', 'responsibilities',
@@ -46,15 +47,15 @@ class JobAPIController(http.Controller):
                 'posted_date', 'joining_tentative_date'
             ]
 
-            # Check for missing fields
-            missing_fields = [field for field in required_fields if not job_data.get(field)]
+            # Validate required fields
+            missing_fields = [field for field in required_fields if field not in job_data]
             if missing_fields:
                 return {
                     'status': 400,
                     'error': f"Missing required fields: {', '.join(missing_fields)}"
                 }
 
-            # Create job posting
+            # Create the job posting
             job = request.env['job.postings'].sudo().create({
                 key: job_data[key] for key in required_fields
             })
@@ -70,4 +71,3 @@ class JobAPIController(http.Controller):
                 'status': 500,
                 'error': f"Internal Server Error: {str(e)}"
             }
-    
