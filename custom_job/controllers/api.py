@@ -1,4 +1,3 @@
-# controllers/api.py
 from odoo import http
 from odoo.http import request
 import json
@@ -7,7 +6,7 @@ class JobAPIController(http.Controller):
 
     @http.route('/api/jobs', type='json', auth='public', methods=['GET'], csrf=False)
     def get_all_jobs(self):
-        # Fetch all job postings from the ats.job model
+        # Fetch all job postings from the job.postings model
         jobs = request.env['job.postings'].sudo().search([])
 
         job_list = []

@@ -29,7 +29,6 @@ class JobPosting(models.Model):
     _description = 'Job Posting'
     _table = 'job_postings'  # Ensure that this table has the 'id' column.
 
-    # Define the fields here
     job_id = fields.Char(string="Job ID", required=True)
     job_title = fields.Char(string="Job Title", required=True)
     experience = fields.Char(string="Experience")
