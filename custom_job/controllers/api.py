@@ -1,6 +1,10 @@
 from odoo import http
 from odoo.http import request
+from datetime import datetime
 import json
+import logging
+
+_logger = logging.getLogger(__name__)
 
 class JobAPIController(http.Controller):
 
@@ -65,35 +69,49 @@ class JobAPIController(http.Controller):
     #         # Return error details if something goes wrong
     #         return {'status': 500, 'error': str(e)}
     
-    
- @http.route('/api/jobs', auth='public', type='json', methods=['POST'], csrf=False)
-    def create_job_posting(self, **kwargs):
-        required_fields = ['job_id', 'job_title', 'experience', 'responsibilities', 'requirement', 'skills', 'company', 'location', 'salary', 'posted_date', 'joining_tentative_date']
+       @http.route('/api/jobs', auth='public', type='json', methods=['POST'], csrf=False)
+       def create_job_posting(self, **kwargs):
+        required_fields = [
+            'job_id', 'job_title', 'experience', 'responsibilities', 'requirement',
+            'skills', 'company', 'location', 'salary', 'posted_date', 'joining_tentative_date'
+        ]
         missing_fields = [field for field in required_fields if not kwargs.get(field)]
 
         if missing_fields:
-            return {'error': f'Missing required fields: {", ".join(missing_fields)}'}
+            return {
+                'success': False,
+                'error': f"Missing required field(s): {', '.join(missing_fields)}"
+            }
 
         try:
-            job_posting = request.env['job.postings'].sudo().create({
-                'job_id': kwargs.get('job_id'),
-                'job_title': kwargs.get('job_title'),
-                'experience': kwargs.get('experience'),
-                'responsibilities': kwargs.get('responsibilities'),
-                'requirement': kwargs.get('requirement'),
-                'skills': kwargs.get('skills'),
-                'status': kwargs.get('status', 'open'),  # default to 'open'
+            # Optional: convert dates if fields are Date or Datetime
+            for date_field in ['posted_date', 'joining_tentative_date']:
+                if kwargs.get(date_field):
+                    try:
+                        # adjust format as per your field type (Date or Datetime)
+                        datetime.strptime(kwargs[date_field], "%Y-%m-%d")
+                    except ValueError:
+                        return {
+                            'success': False,
+                            'error': f"Invalid date format for '{date_field}', expected 'YYYY-MM-DD'"
+                        }
+
+            values = {
+                field: kwargs.get(field) for field in required_fields
+            }
+
+            # Set optional fields with defaults
+            values.update({
+                'status': kwargs.get('status', 'open'),
                 'workplace_type': kwargs.get('workplace_type', 'hybrid'),
-                'shift': kwargs.get('shift', 'day'),
-                'company': kwargs.get('company'),
-                'location': kwargs.get('location'),
-                'salary': kwargs.get('salary'),
-                'posted_date': kwargs.get('posted_date'),
-                'joining_tentative_date': kwargs.get('joining_tentative_date'),
+                'shift': kwargs.get('shift', 'day')
             })
+
+            job_posting = request.env['job.postings'].sudo().create(values)
 
             return {
                 'success': True,
+                'message': 'Job created successfully',
                 'job': {
                     'id': job_posting.id,
                     'job_id': job_posting.job_id,
@@ -101,5 +119,10 @@ class JobAPIController(http.Controller):
                     'status': job_posting.status
                 }
             }
+
         except Exception as e:
-            return {'error': str(e)}
+            _logger.error(f"Error creating job posting: {str(e)}", exc_info=True)
+            return {
+                'success': False,
+                'error': 'Internal Server Error. Check logs for more info.'
+            }
