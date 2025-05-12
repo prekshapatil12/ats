@@ -33,7 +33,7 @@ class JobAPIController(http.Controller):
     
     
       @http.route('/api/jobs', type='json', auth='public', methods=['POST'], csrf=False)
-    def create_job(self, **kwargs):
+      def create_job(self, **kwargs):
         try:
             # Extract fields from JSON body
             job_data = request.jsonrequest
