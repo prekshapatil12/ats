@@ -29,28 +29,38 @@ class JobAPIController(http.Controller):
             })
         return {'status': 200, 'jobs': job_list}
     
-@http.route('/api/jobs', type='json', auth='public', methods=['POST'], csrf=False)
-def create_job_posting(self, **kwargs):
-    try:
-        # No need to use request.jsonrequest here
-        new_job = request.env['job.postings'].sudo().create({
-            'job_id': kwargs.get('job_id'),
-            'job_title': kwargs.get('job_title'),
-            'experience': kwargs.get('experience'),
-            'responsibilities': kwargs.get('responsibilities'),
-            'requirement': kwargs.get('requirement'),
-            'skills': kwargs.get('skills'),
-            'status': kwargs.get('status'),
-            'workplace_type': kwargs.get('workplace_type'),
-            'shift': kwargs.get('shift'),
-            'company': kwargs.get('company'),
-            'location': kwargs.get('location'),
-            'salary': kwargs.get('salary'),
-            'posted_date': kwargs.get('posted_date'),
-            'joining_tentative_date': kwargs.get('joining_tentative_date'),
-        })
+    
+    @http.route('/api/jobs', type='json', auth='public', methods=['POST'], csrf=False)
+    def create_job_posting(self, **kwargs):
+        try:
+            # Extract the data from the incoming JSON payload
+            job_data = {
+                'job_id': kwargs.get('job_id'),
+                'job_title': kwargs.get('job_title'),
+                'experience': kwargs.get('experience'),
+                'responsibilities': kwargs.get('responsibilities'),
+                'requirement': kwargs.get('requirement'),
+                'skills': kwargs.get('skills'),
+                'status': kwargs.get('status'),
+                'workplace_type': kwargs.get('workplace_type'),
+                'shift': kwargs.get('shift'),
+                'company': kwargs.get('company'),
+                'location': kwargs.get('location'),
+                'salary': kwargs.get('salary'),
+                'posted_date': kwargs.get('posted_date'),
+                'joining_tentative_date': kwargs.get('joining_tentative_date'),
+            }
 
-        return {'status': 201, 'message': 'Job created successfully', 'job_id': new_job.id}
+            # Create a new job posting record in the job.postings model
+            new_job = request.env['job.postings'].sudo().create(job_data)
 
-    except Exception as e:
-        return {'status': 500, 'error': str(e)}
+            # Return a success response with the newly created job's ID
+            return {
+                'status': 201,
+                'message': 'Job created successfully',
+                'job_id': new_job.id
+            }
+
+        except Exception as e:
+            # Return error details if something goes wrong
+            return {'status': 500, 'error': str(e)}
