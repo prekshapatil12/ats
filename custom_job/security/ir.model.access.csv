@@ -1,2 +1,2 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_ats_job_user,access_ats_job_user,model_ats_job,base.group_user,1,1,1,1
+access_job_postings_user,access_job_postings_user,model_job_postings,base.group_user,1,1,1,1
