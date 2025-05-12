@@ -32,7 +32,10 @@ from odoo import http
 from odoo.http import request
 import json
 
-class JobAPI(http.Controller):
+from odoo import http
+from odoo.http import request
+
+class JobAPIController(http.Controller):
 
     @http.route('/api/jobs', auth='public', type='json', methods=['GET'], csrf=False)
     def get_jobs(self):
