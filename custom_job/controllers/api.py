@@ -36,3 +36,51 @@ class JobAPIController(http.Controller):
                 status=500
             )
 
+    @http.route('/api/jobs', type='json', auth='public', methods=['POST'], csrf=False)
+    def create_job(self, **kwargs):
+        try:
+            # Read JSON data from request
+            data = request.jsonrequest
+
+            # Validate required fields (add more as needed)
+            required_fields = ['job_id', 'job_title', 'experience', 'responsibilities', 
+                               'requirement', 'skills', 'status', 'workplace_type', 
+                               'shift', 'company', 'location', 'salary', 
+                               'posted_date', 'joining_tentative_date']
+            for field in required_fields:
+                if field not in data:
+                    return Response(
+                        json.dumps({'status': 400, 'error': f'Missing required field: {field}'}),
+                        content_type='application/json',
+                        status=400
+                    )
+
+            # Create the job record
+            job = request.env['job.postings'].sudo().create({
+                'job_id': data['job_id'],
+                'job_title': data['job_title'],
+                'experience': data['experience'],
+                'responsibilities': data['responsibilities'],
+                'requirement': data['requirement'],
+                'skills': data['skills'],
+                'status': data['status'],
+                'workplace_type': data['workplace_type'],
+                'shift': data['shift'],
+                'company': data['company'],
+                'location': data['location'],
+                'salary': data['salary'],
+                'posted_date': data['posted_date'],
+                'joining_tentative_date': data['joining_tentative_date'],
+            })
+
+            return Response(
+                json.dumps({'status': 201, 'message': 'Job created successfully', 'job_id': job.id}),
+                content_type='application/json',
+                status=201
+            )
+        except Exception as e:
+            return Response(
+                json.dumps({'status': 500, 'error': str(e)}),
+                content_type='application/json',
+                status=500
+            )
