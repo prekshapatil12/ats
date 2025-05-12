@@ -32,40 +32,4 @@ class JobAPIController(http.Controller):
         return {'status': 200, 'jobs': job_list}
     
     
-     @http.route('/api/jobs', type='json', auth='public', methods=['POST'], csrf=False)
-     def create_job(self, **kwargs):
-        """
-        Create a new job posting.
-        """
-        try:
-            job_data = request.jsonrequest or {}
-
-            required_fields = [
-                'job_id', 'job_title', 'experience', 'responsibilities',
-                'requirement', 'skills', 'status', 'workplace_type',
-                'shift', 'company', 'location', 'salary',
-                'posted_date', 'joining_tentative_date'
-            ]
-
-            missing_fields = [field for field in required_fields if field not in job_data]
-            if missing_fields:
-                return {
-                    'status': 400,
-                    'error': f"Missing required fields: {', '.join(missing_fields)}"
-                }
-
-            job = request.env['job.postings'].sudo().create({
-                field: job_data[field] for field in required_fields
-            })
-
-            return {
-                'status': 201,
-                'message': 'Job created successfully',
-                'job_id': job.id
-            }
-
-        except Exception as e:
-            return {
-                'status': 500,
-                'error': f"Internal Server Error: {str(e)}"
-            }
+    
