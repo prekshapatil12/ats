@@ -63,4 +63,9 @@ class JobAPIController(http.Controller):
 
         except Exception as e:
             # Return error details if something goes wrong
-            return {'status': 500, 'error': str(e)}
+             _logger.error("Error in job creation: %s", str(e))  # Add this
+             return Response(
+             json.dumps({'status': 500, 'error': str(e)}),
+             content_type='application/json',
+             status=500
+        )
