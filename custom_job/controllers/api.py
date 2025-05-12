@@ -55,7 +55,7 @@ class JobAPI(http.Controller):
                 'posted_date': job.posted_date,
                 'joining_tentative_date': job.joining_tentative_date
             })
-        return job_list
+        return {'status': 200, 'jobs': job_list}
 
     @http.route('/api/jobs', auth='public', type='json', methods=['POST'], csrf=False)
     def create_job(self, **post):
@@ -75,4 +75,4 @@ class JobAPI(http.Controller):
             'posted_date': post.get('posted_date'),
             'joining_tentative_date': post.get('joining_tentative_date'),
         })
-        return {'status': 'success', 'id': job.id}
+        return {'status': 'success', 'message': 'Job created successfully', 'id': job.id}
