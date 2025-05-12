@@ -32,40 +32,40 @@ class JobAPIController(http.Controller):
         return {'status': 200, 'jobs': job_list}
     
     
-      @http.route('/api/jobs', type='json', auth='public', methods=['POST'], csrf=False)
-      def create_job(self, **kwargs):
+     @http.route('/api/jobs', type='json', auth='public', methods=['POST'], csrf=False)
+     def create_job(self, **kwargs):
+        """
+        Create a new job posting.
+        """
         try:
-            # Extract fields from JSON body
-            job_data = request.jsonrequest
+            job_data = request.jsonrequest or {}
 
-            # Validate required fields (example: job_title and company)
-            required_fields = ['job_id', 'job_title', 'experience', 'responsibilities',
-                               'requirement', 'skills', 'status', 'workplace_type',
-                               'shift', 'company', 'location', 'salary',
-                               'posted_date', 'joining_tentative_date']
-            for field in required_fields:
-                if field not in job_data:
-                    return {'status': 400, 'error': f'Missing required field: {field}'}
+            required_fields = [
+                'job_id', 'job_title', 'experience', 'responsibilities',
+                'requirement', 'skills', 'status', 'workplace_type',
+                'shift', 'company', 'location', 'salary',
+                'posted_date', 'joining_tentative_date'
+            ]
 
-            # Create the job posting record
+            missing_fields = [field for field in required_fields if field not in job_data]
+            if missing_fields:
+                return {
+                    'status': 400,
+                    'error': f"Missing required fields: {', '.join(missing_fields)}"
+                }
+
             job = request.env['job.postings'].sudo().create({
-                'job_id': job_data['job_id'],
-                'job_title': job_data['job_title'],
-                'experience': job_data['experience'],
-                'responsibilities': job_data['responsibilities'],
-                'requirement': job_data['requirement'],
-                'skills': job_data['skills'],
-                'status': job_data['status'],
-                'workplace_type': job_data['workplace_type'],
-                'shift': job_data['shift'],
-                'company': job_data['company'],
-                'location': job_data['location'],
-                'salary': job_data['salary'],
-                'posted_date': job_data['posted_date'],
-                'joining_tentative_date': job_data['joining_tentative_date'],
+                field: job_data[field] for field in required_fields
             })
 
-            return {'status': 201, 'message': 'Job created successfully', 'job_id': job.id}
-        
+            return {
+                'status': 201,
+                'message': 'Job created successfully',
+                'job_id': job.id
+            }
+
         except Exception as e:
-            return {'status': 500, 'error': str(e)}
+            return {
+                'status': 500,
+                'error': f"Internal Server Error: {str(e)}"
+            }
