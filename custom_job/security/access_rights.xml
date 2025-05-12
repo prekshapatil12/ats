@@ -1,38 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data noupdate="1">
-
-        <!-- Group: API User -->
-        <record id="group_api_user" model="res.groups">
-            <field name="name">API User</field>
-            <field name="category_id" ref="base.module_category_hidden"/>
-            <field name="comment">Users allowed to access and create job postings via API</field>
-            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
-        </record>
-
-        <!-- Rule: API Users can read only active jobs -->
-        <record id="job_postings_api_read_rule" model="ir.rule">
-            <field name="name">API Users: Read Active Jobs Only</field>
-            <field name="model_id" ref="your_module.model_job_postings"/>
-            <field name="domain_force">[('status', '=', 'active')]</field>
-            <field name="groups" eval="[(4, ref('your_module.group_api_user'))]"/>
+        <!-- Allow public access to read job.postings -->
+        <record id="job_postings_public_read_access" model="ir.model.access">
+            <field name="name">job.postings public read access</field>
+            <field name="model_id" ref="model_job_postings"/>
+            <field name="group_id" eval="False"/> <!-- Public access -->
             <field name="perm_read" eval="1"/>
-            <field name="perm_write" eval="0"/>
-            <field name="perm_create" eval="0"/>
-            <field name="perm_unlink" eval="0"/>
-        </record>
-
-        <!-- Rule: API Users can create job postings -->
-        <record id="job_postings_api_create_rule" model="ir.rule">
-            <field name="name">API Users: Create Job Postings</field>
-            <field name="model_id" ref="your_module.model_job_postings"/>
-            <field name="domain_force">[]</field> <!-- no restriction -->
-            <field name="groups" eval="[(4, ref('your_module.group_api_user'))]"/>
-            <field name="perm_read" eval="0"/>
-            <field name="perm_write" eval="0"/>
+            <field name="perm_write" eval="1"/>
             <field name="perm_create" eval="1"/>
             <field name="perm_unlink" eval="0"/>
         </record>
-
     </data>
 </odoo>
