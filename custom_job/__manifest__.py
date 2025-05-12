@@ -19,7 +19,6 @@ Features:
     'data': [
         # Add your access rights, views, and data files here
         'security/ir.model.access.csv',
-        'security/access_rights.xml'
     ],
     'assets': {
         'web.assets_frontend': [
