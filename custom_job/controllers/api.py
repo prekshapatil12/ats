@@ -32,32 +32,33 @@ from odoo import http
 from odoo.http import request
 import json
 
-@http.route('/api/jobs', auth='public', type='json', methods=['GET'], csrf=False)
-def get_jobs(self):
-    Job = request.env['custom_job.job_posting'].sudo()  # ✅ no \n
-    jobs = Job.search([])
-    job_list = []
-    for job in jobs:
-        job_list.append({
-            'job_id': job.job_id,
-            'job_title': job.job_title,
-            'experience': job.experience,
-            'responsibilities': job.responsibilities,
-            'requirement': job.requirement,
-            'skills': job.skills,
-            'status': job.status,
-            'workplace_type': job.workplace_type,
-            'shift': job.shift,
-            'company': job.company,
-            'location': job.location,
-            'salary': job.salary,
-            'posted_date': job.posted_date,
-            'joining_tentative_date': job.joining_tentative_date
-        })
+class JobAPI(http.Controller):
+
+    @http.route('/api/jobs', auth='public', type='json', methods=['GET'], csrf=False)
+    def get_jobs(self):
+        jobs = request.env['custom_job.job_posting'].sudo().search([])
+        job_list = []
+        for job in jobs:
+            job_list.append({
+                'job_id': job.job_id,
+                'job_title': job.job_title,
+                'experience': job.experience,
+                'responsibilities': job.responsibilities,
+                'requirement': job.requirement,
+                'skills': job.skills,
+                'status': job.status,
+                'workplace_type': job.workplace_type,
+                'shift': job.shift,
+                'company': job.company,
+                'location': job.location,
+                'salary': job.salary,
+                'posted_date': job.posted_date,
+                'joining_tentative_date': job.joining_tentative_date
+            })
         return {'status': 200, 'jobs': job_list}
 
-@http.route('/api/jobs', auth='public', type='json', methods=['POST'], csrf=False)
-def create_job(self, **post):
+    @http.route('/api/jobs', auth='public', type='json', methods=['POST'], csrf=False)
+    def create_job(self, **post):
         job = request.env['custom_job.job_posting'].sudo().create({
             'job_id': post.get('job_id'),
             'job_title': post.get('job_title'),
