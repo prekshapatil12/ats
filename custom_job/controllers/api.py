@@ -34,8 +34,7 @@ import json
 
 @http.route('/api/jobs', auth='public', type='json', methods=['GET'], csrf=False)
 def get_jobs(self):
-    Job = request.env['custom_job.job_posting'].sudo()  # ✅ no \n
-    jobs = Job.search([])
+    jobs = request.env['custom_job.job_posting'].sudo().search([])
     job_list = []
     for job in jobs:
         job_list.append({
@@ -54,7 +53,7 @@ def get_jobs(self):
             'posted_date': job.posted_date,
             'joining_tentative_date': job.joining_tentative_date
         })
-        return {'status': 200, 'jobs': job_list}
+    return {'status': 200, 'jobs': job_list}
 
 @http.route('/api/jobs', auth='public', type='json', methods=['POST'], csrf=False)
 def create_job(self, **post):
