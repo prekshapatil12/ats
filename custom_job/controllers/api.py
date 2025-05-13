@@ -337,35 +337,25 @@ class JobAPIController(http.Controller):
             }
             
     
-
     @http.route('/api/jobs/<string:job_id>', type='json', auth='public', methods=['DELETE'], csrf=False)
-    def delete_job(self, job_id, **kwargs):
-    """
-    Delete a job posting using the custom job_id field.
-    """
+def delete_job(self, job_id, **kwargs):
     try:
-        # Find the job record using the custom job_id (not the internal 'id')
+        
+
         job = request.env['job.postings'].sudo().search([('job_id', '=', job_id)], limit=1)
 
         if not job:
-            return {
-                'status': 404,
-                'error': f"No job found with job_id '{job_id}'"
-            }
+           
+            return {'status': 404, 'error': f"No job found with job_id '{job_id}'"}
 
-        # Delete the job record
+        
         job.unlink()
 
-        return {
-            'status': 200,
-            'message': f"Job with job_id '{job_id}' has been deleted successfully."
-        }
+        return {'status': 200, 'message': f"Job with job_id '{job_id}' deleted successfully."}
 
     except Exception as e:
-        return {
-            'status': 500,
-            'error': f"Internal Server Error: {str(e)}"
-        }
+        
+        return {'status': 500, 'error': f"Internal Server Error: {str(e)}"}
 
       
    
