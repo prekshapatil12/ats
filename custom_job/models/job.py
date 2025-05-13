@@ -22,7 +22,6 @@
 
 # models/job.py
 # models/job.py
-
 from odoo import models, fields
 
 class JobPosting(models.Model):

@@ -73,50 +73,57 @@ class JobAPIController(http.Controller):
             }
           
       
-    @http.route('/api/jobs/<string:job_id>', type='json', auth='public', methods=['PUT'], csrf=False)
-    def update_job_by_job_id(self, job_id, **kwargs):
-    """
-    Update an existing job posting using the custom 'job_id' field.
-    Expects raw JSON body with fields to update.
-    """
-    try:
-        job_data = json.loads(request.httprequest.data.decode('utf-8'))
+      
+      
+      
+      @http.route('/api/jobs/<string:job_id>', type='json', auth='public', methods=['PUT'], csrf=False)
+      def create_job(self,job_id, **kwargs):
+        """
+        Create a new job posting (expects raw JSON).
+        """
+        try:
+            # Safely parse raw JSON from the body
+            job_data = json.loads(request.httprequest.data.decode('utf-8'))
 
-        # Search job using custom job_id
-        job = request.env['job.postings'].sudo().search([('job_id', '=', job_id)], limit=1)
-        if not job:
+            job = request.env['job.postings'].sudo().browse(job_id)
+            if not job.exists():
+                return {
+                    'status': 404,
+                    'error': f'Job with ID {job_id} not found'
+                }
+
+            
+            updatable_fields = [
+                'job_id', 'job_title', 'experience', 'responsibilities',
+                'requirement', 'skills', 'status', 'workplace_type',
+                'shift', 'company', 'location', 'salary',
+                'posted_date', 'joining_tentative_date'
+            ]
+            
+            update_values = {key: job_data[key] for key in updatable_fields if key in job_data}
+
+            if not update_values:
+                return {
+                    'status': 400,
+                    'error': 'No valid fields provided for update'
+                }
+
+            job.write(update_values)
+            
             return {
-                'status': 404,
-                'error': f"Job with job_id '{job_id}' not found"
+                'status': 201,
+                'message': 'Job Updated successfully',
+                'job_id': job.id
             }
 
-        # Fields allowed to update
-        updatable_fields = [
-            'job_title', 'experience', 'responsibilities',
-            'requirement', 'skills', 'status', 'workplace_type',
-            'shift', 'company', 'location', 'salary',
-            'posted_date', 'joining_tentative_date'
-        ]
-
-        # Filter update data
-        update_values = {key: job_data[key] for key in updatable_fields if key in job_data}
-
-        if not update_values:
+        except Exception as e:
             return {
-                'status': 400,
-                'error': 'No valid fields provided for update'
+                'status': 500,
+                'error': f"Internal Server Error: {str(e)}"
             }
-
-        # Update the job record
-        job.write(update_values)
-
-        return {
-            'status': 200,
-            'message': f"Job with job_id '{job_id}' updated successfully"
-        }
-
-    except Exception as e:
-        return {
-            'status': 500,
-            'error': f"Internal Server Error: {str(e)}"
-        }
+          
+      
+      
+      
+      
+      
