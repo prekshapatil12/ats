@@ -72,3 +72,48 @@ class JobAPIController(http.Controller):
                 'error': f"Internal Server Error: {str(e)}"
             }
           
+     @http.route('/api/jobs/<int:job_id>', type='json', auth='public', methods=['PUT'], csrf=False)
+     def update_job(self, job_id, **kwargs):
+        """
+        Update an existing job posting by its database ID.
+        Expects raw JSON body with fields to update.
+        """
+        try:
+            job_data = json.loads(request.httprequest.data.decode('utf-8'))
+
+            # Find the job by ID
+            job = request.env['job.postings'].sudo().browse(job_id)
+            if not job.exists():
+                return {
+                    'status': 404,
+                    'error': f'Job with ID {job_id} not found'
+                }
+
+            # Only update the fields that are present in the payload
+            updatable_fields = [
+                'job_id', 'job_title', 'experience', 'responsibilities',
+                'requirement', 'skills', 'status', 'workplace_type',
+                'shift', 'company', 'location', 'salary',
+                'posted_date', 'joining_tentative_date'
+            ]
+
+            update_values = {key: job_data[key] for key in updatable_fields if key in job_data}
+
+            if not update_values:
+                return {
+                    'status': 400,
+                    'error': 'No valid fields provided for update'
+                }
+
+            job.write(update_values)
+
+            return {
+                'status': 200,
+                'message': f'Job with ID {job_id} updated successfully'
+            }
+
+        except Exception as e:
+            return {
+                'status': 500,
+                'error': f'Internal Server Error: {str(e)}'
+            }      
