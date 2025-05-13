@@ -77,7 +77,48 @@ class JobAPIController(http.Controller):
       
       
     @http.route('/api/jobs/<string:job_id>', type='json', auth='public', methods=['PUT'], csrf=False)
-    def create_job(self, job_id, **kwargs):
+    def update_job(self, job_id, **kwargs):
+        """
+        Update an existing job posting using the custom job_id.
+        """
+        try:
+            # Parse the raw JSON body
+            job_data = json.loads(request.httprequest.data.decode('utf-8'))
+
+            if not job_data:
+                return {'status': 400, 'error': 'No data provided in the request body.'}
+
+            # Search for the job by custom job_id
+            job = request.env['job.postings'].sudo().search([('job_id', '=', job_id)], limit=1)
+            if not job:
+                return {'status': 404, 'error': f"No job found with job_id '{job_id}'"}
+
+            # Fields allowed to be updated (from your model)
+            allowed_fields = [
+                'job_title', 'experience', 'responsibilities',
+                'requirement', 'skills', 'status', 'workplace_type',
+                'shift', 'company', 'location', 'salary',
+                'posted_date', 'joining_tentative_date'
+            ]
+
+            # Prepare values to update
+            update_values = {field: job_data[field] for field in allowed_fields if field in job_data}
+
+            if not update_values:
+                return {'status': 400, 'error': 'No valid fields provided for update.'}
+
+            # Write updates to the job record
+            job.write(update_values)
+
+            return {
+                'status': 200,
+                'message': f"Job with job_id '{job_id}' updated successfully.",
+                'updated_fields': list(update_values.keys())
+            }
+
+        except Exception as e:
+            
+            return {'status': 500, 'error': f"Internal Server Error: {str(e)}"}
         """
         Update an existing job posting using the custom job_id field.
         Expects a JSON body with fields to update.
