@@ -117,11 +117,9 @@ class JobAPIController(http.Controller):
                 'updated_fields': list(update_values.keys())
             }
 
-          except Exception as e:
-            return {
-                'status': 500,
-                'error': f"Internal Server Error: {str(e)}"
-            }
+        except Exception as e:
+            
+            return {'status': 500, 'error': f"Internal Server Error: {str(e)}"}
         """
         Create a new job posting (expects raw JSON).
         """
