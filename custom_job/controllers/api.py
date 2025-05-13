@@ -72,7 +72,7 @@ class JobAPIController(http.Controller):
                 'error': f"Internal Server Error: {str(e)}"
             }
           
-     @http.route('/api/jobs/<int:job_id>', type='json', auth='public', methods=['PUT'], csrf=False)
+     @http.route('/api/jobs/<string:job_id>', type='json', auth='public', methods=['PUT'], csrf=False)
      def update_job(self, job_id, **kwargs):
         """
         Update an existing job posting by its database ID.
