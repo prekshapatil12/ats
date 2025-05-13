@@ -338,7 +338,7 @@ class JobAPIController(http.Controller):
             
     
     @http.route('/api/jobs/<string:job_id>', type='json', auth='public', methods=['DELETE'], csrf=False)
-def delete_job(self, job_id, **kwargs):
+    def delete_job(self, job_id, **kwargs):
     try:
         
 
