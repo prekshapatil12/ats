@@ -76,8 +76,50 @@ class JobAPIController(http.Controller):
       
       
       
-      @http.route('/api/jobs/<string:job_id>', type='json', auth='public', methods=['PUT'], csrf=False)
-      def create_job(self,job_id, **kwargs):
+    @http.route('/api/jobs/<string:job_id>', type='json', auth='public', methods=['PUT'], csrf=False)
+    def create_job(self, job_id, **kwargs):
+        """
+        Update an existing job posting using the custom job_id field.
+        Expects a JSON body with fields to update.
+        """
+        try:
+            # Parse JSON request body
+            job_data = request.jsonrequest
+
+            if not job_data:
+                return {'status': 400, 'error': 'No data provided in the request body.'}
+
+            # Search for the job using job_id
+            job = request.env['job.postings'].sudo().search([('job_id', '=', job_id)], limit=1)
+            if not job:
+                return {'status': 404, 'error': f"No job found with job_id '{job_id}'"}
+
+            # Define updatable fields from your model
+            updatable_fields = [
+                'job_title', 'experience', 'responsibilities',
+                'requirement', 'skills', 'status', 'workplace_type',
+                'shift', 'company', 'location', 'salary',
+                'posted_date', 'joining_tentative_date'
+            ]
+
+            # Build the dictionary with only valid fields present in request
+            update_values = {field: job_data[field] for field in updatable_fields if field in job_data}
+
+            if not update_values:
+                return {'status': 400, 'error': 'No valid fields provided to update.'}
+
+            # Write (update) the job
+            job.write(update_values)
+
+            return {
+                'status': 200,
+                'message': f"Job with job_id '{job_id}' updated successfully.",
+                'updated_fields': list(update_values.keys())
+            }
+
+        except Exception as e:
+            _logger.error("Error updating job_id %s: %s", job_id, str(e))
+            return {'status': 500, 'error': f"Internal Server Error: {str(e)}"}
         """
         Create a new job posting (expects raw JSON).
         """
@@ -94,7 +136,7 @@ class JobAPIController(http.Controller):
 
             
             updatable_fields = [
-                'job_id', 'job_title', 'experience', 'responsibilities',
+                'job_title', 'experience', 'responsibilities',
                 'requirement', 'skills', 'status', 'workplace_type',
                 'shift', 'company', 'location', 'salary',
                 'posted_date', 'joining_tentative_date'
