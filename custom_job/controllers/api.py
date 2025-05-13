@@ -71,42 +71,4 @@ class JobAPIController(http.Controller):
                 'status': 500,
                 'error': f"Internal Server Error: {str(e)}"
             }
-            
-            
-        @http.route('/api/jobs/<int:job_id>', type='json', auth='public', methods=['PUT'], csrf=False)
-        def update_job(self, job_id, **kwargs):
-    """
-    Update a job posting by ID (expects raw JSON).
-    """
-         try:
-        # Safely parse raw JSON from the body
-        job_data = json.loads(request.httprequest.data.decode('utf-8'))
-
-        # Find the job record
-        job = request.env['job.postings'].sudo().search([('id', '=', job_id)], limit=1)
-        if not job:
-            return {'status': 404, 'error': f'Job with ID {job_id} not found'}
-
-        # Update only allowed fields
-        updatable_fields = [
-            'job_id', 'job_title', 'experience', 'responsibilities',
-            'requirement', 'skills', 'status', 'workplace_type',
-            'shift', 'company', 'location', 'salary',
-            'posted_date', 'joining_tentative_date'
-        ]
-
-        update_data = {key: job_data[key] for key in updatable_fields if key in job_data}
-
-        job.write(update_data)
-
-        return {
-            'status': 200,
-            'message': 'Job updated successfully',
-            'job_id': job.id
-        }
-
-    except Exception as e:
-        return {
-            'status': 500,
-            'error': f'Internal Server Error: {str(e)}'
-        }
+          
