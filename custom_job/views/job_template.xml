@@ -1,0 +1,8 @@
+<odoo>
+    <data>
+        <!-- Job Page Template -->
+        <template id="job_page_template" name="Job Page">
+            <h1>Hello Job</h1>
+        </template>
+    </data>
+</odoo>

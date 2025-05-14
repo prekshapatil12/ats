@@ -17,8 +17,8 @@ Features:
     'license': 'LGPL-3',
     'depends': ['base', 'website'],
     'data': [
-        # Add your access rights, views, and data files here
         'security/ir.model.access.csv',
+        'views/job_template.xml',  # Add the view file here
     ],
     'assets': {
         'web.assets_frontend': [
@@ -29,4 +29,3 @@ Features:
     'application': True,
     'auto_install': False,
 }
-

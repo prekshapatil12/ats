@@ -369,3 +369,7 @@ class JobAPIController(http.Controller):
                 'status': 500,
                 'error': f"Internal Server Error: {str(e)}"
             }
+
+    @http.route('/job', type='http', auth='public', website=True)
+    def job_page(self, **kw):
+        return request.render('custom_job.job_page_template')
