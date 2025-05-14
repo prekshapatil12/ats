@@ -371,8 +371,8 @@ class JobAPIController(http.Controller):
             }
     
     @http.route('/jobs', type='http', auth='public', website=True)
-    def job_list(self):
+    def web_job_list(self, **kwargs):
         jobs = request.env['job.postings'].sudo().search([])
-        return request.render('custom_job.website_job_posted', {
+        return request.render('your_module_name.job_listing_template', {
             'jobs': jobs
         })
