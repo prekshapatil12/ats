@@ -373,11 +373,11 @@ class JobAPIController(http.Controller):
     @http.route('/jobs', type='http', auth='public', website=True)
     def list_jobs(self, **kw):
         jobs = request.env['job.postings'].sudo().search([])
-        return request.render('custom_job.job_template', {'jobs': jobs})
+        return request.render('custom_job.job_template.xml', {'jobs': jobs})
 
     @http.route('/jobs/<string:job_id>', type='http', auth='public', website=True)
     def job_detail(self, job_id, **kw):
         job = request.env['job.postings'].sudo().search([('job_id', '=', job_id)], limit=1)
         if not job:
             return request.not_found()
-        return request.render('custom_job.job_template', {'job': job})
+        return request.render('custom_job.job_template.xml', {'job': job})
