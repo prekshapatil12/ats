@@ -370,9 +370,12 @@ class JobAPIController(http.Controller):
                 'error': f"Internal Server Error: {str(e)}"
             }
     
-    @http.route('/jobs', type='http', auth='public', website=True)
-    def web_job_list(self, **kwargs):
+    @http.route(['/jobs'], type='http', auth='public', website=True)
+    def jobs_list(self, **kwargs):
         jobs = request.env['job.postings'].sudo().search([])
-        return request.render('your_module_name.job_listing_template', {
+
+        qcontext = {
             'jobs': jobs
-        })
+        }
+
+        return request.render('Custom Job Portal.job_template.xml', qcontext)
