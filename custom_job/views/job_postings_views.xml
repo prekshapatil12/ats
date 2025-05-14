@@ -1,0 +1,58 @@
+<odoo>
+    <record id="view_job_posting_tree" model="ir.ui.view">
+        <field name="name">job.postings.tree</field>
+        <field name="model">job.postings</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="job_id"/>
+                <field name="job_title"/>
+                <field name="company"/>
+                <field name="location"/>
+                <field name="status"/>
+                <field name="posted_date"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_job_posting_form" model="ir.ui.view">
+        <field name="name">job.postings.form</field>
+        <field name="model">job.postings</field>
+        <field name="arch" type="xml">
+            <form string="Job Posting">
+                <sheet>
+                    <group>
+                        <field name="job_id"/>
+                        <field name="job_title"/>
+                        <field name="company"/>
+                        <field name="location"/>
+                        <field name="experience"/>
+                        <field name="responsibilities"/>
+                        <field name="requirement"/>
+                        <field name="skills"/>
+                        <field name="status"/>
+                        <field name="workplace_type"/>
+                        <field name="shift"/>
+                        <field name="salary"/>
+                        <field name="posted_date"/>
+                        <field name="joining_tentative_date"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_job_posting" model="ir.actions.act_window">
+        <field name="name">Job Postings</field>
+        <field name="res_model">job.postings</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="menu_job_postings_root" name="Job Portal"/>
+    <menuitem id="menu_job_postings" name="Job Postings" parent="menu_job_postings_root"/>
+    <menuitem id="menu_job_postings_action" name="All Job Postings" parent="menu_job_postings"
+              action="action_job_posting"/>
+</odoo>
+
+
+
+
+
+
+

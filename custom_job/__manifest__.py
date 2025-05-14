@@ -19,6 +19,7 @@ Features:
     'data': [
         # Add your access rights, views, and data files here
         'security/ir.model.access.csv',
+        'views/job_postings_views.xml',
     ],
     'assets': {
         'web.assets_frontend': [
@@ -29,3 +30,4 @@ Features:
     'application': True,
     'auto_install': False,
 }
+
