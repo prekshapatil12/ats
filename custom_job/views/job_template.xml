@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="website_job_posted" name="Job Listings Page">
+        <t t-call="website.layout">
+            <div class="container mt-4">
+                <h2 class="mb-4">Available Job Postings</h2>
+                <table class="table table-bordered table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Job ID</th>
+                            <th>Job Title</th>
+                            <th>Experience</th>
+                            <th>Responsibilities</th>
+                            <th>Requirement</th>
+                            <th>Skills</th>
+                            <th>Status</th>
+                            <th>Workplace Type</th>
+                            <th>Shift</th>
+                            <th>Company</th>
+                            <th>Location</th>
+                            <th>Salary</th>
+                            <th>Posted Date</th>
+                            <th>Joining Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="jobs" t-as="job">
+                            <tr>
+                                <td><t t-esc="job.job_id"/></td>
+                                <td><t t-esc="job.job_title"/></td>
+                                <td><t t-esc="job.experience"/></td>
+                                <td><t t-esc="job.responsibilities"/></td>
+                                <td><t t-esc="job.requirement"/></td>
+                                <td><t t-esc="job.skills"/></td>
+                                <td><t t-esc="job.status"/></td>
+                                <td><t t-esc="job.workplace_type"/></td>
+                                <td><t t-esc="job.shift"/></td>
+                                <td><t t-esc="job.company"/></td>
+                                <td><t t-esc="job.location"/></td>
+                                <td><t t-esc="job.salary"/></td>
+                                <td><t t-esc="job.posted_date"/></td>
+                                <td><t t-esc="job.joining_tentative_date"/></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+</odoo>
+
+
+
+
+
+

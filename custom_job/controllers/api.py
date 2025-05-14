@@ -369,4 +369,10 @@ class JobAPIController(http.Controller):
                 'status': 500,
                 'error': f"Internal Server Error: {str(e)}"
             }
-   
+    
+    @http.route('/jobs', type='http', auth='public', website=True)
+    def job_list(self):
+        jobs = request.env['job.postings'].sudo().search([])
+        return request.render('custom_job.website_job_posted', {
+            'jobs': jobs
+        })
