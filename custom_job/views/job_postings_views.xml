@@ -1,27 +1,11 @@
-<odoo>
-    <data>
-        <!-- Define the Job Page View -->
-        <record id="view_job_page" model="ir.ui.view">
-            <field name="name">job.page</field>
-            <field name="model">website.page</field>
-            <field name="arch" type="xml">
-                <div class="oe_structure"/>
-                <h1>Hello Job</h1>
-                <!-- Add more HTML content as necessary -->
-            </field>
-        </record>
-
-        <!-- Define the action to open this view -->
-        <record id="action_job_page" model="ir.actions.act_window">
-            <field name="name">Job Page</field>
-            <field name="res_model">website.page</field>
-            <field name="view_mode">form</field>
-            <field name="view_id" ref="view_job_page"/>
-            <field name="type">ir.actions.act_window</field>
-        </record>
-
-        <!-- Create a menu item to access the Job Page -->
-        <menuitem id="menu_job" name="Job" sequence="10"/>
-        <menuitem id="menu_job_page" name="Job Page" parent="menu_job" action="action_job_page"/>
-    </data>
-</odoo>
+<record id="view_job_page" model="ir.ui.view">
+    <field name="name">job.page</field>
+    <field name="model">website.page</field>
+    <field name="arch" type="xml">
+        <data>
+            <div class="oe_structure"/>
+            <h1>Hello Job</h1>
+            <!-- Add more HTML content as necessary -->
+        </data>
+    </field>
+</record>
