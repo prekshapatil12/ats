@@ -1,9 +1,9 @@
 <odoo>
     <data>
         <!-- Create the View -->
-        <record id="view_job_page" model="ir.ui.view">
+        <record id="view_job_page" model="custom_job">
             <field name="name">job.page</field>
-            <field name="model">ir.ui.view</field>
+            <field name="model">custom_job</field>
             <field name="arch" type="xml">
                 <div class="oe_structure"/>
                 <h1>Hello Job</h1>
