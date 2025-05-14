@@ -1,125 +1,24 @@
 <odoo>
+    <data>
+        <!-- Create the View -->
+        <record id="view_job_page" model="ir.ui.view">
+            <field name="name">job.page</field>
+            <field name="model">ir.ui.view</field>
+            <field name="arch" type="xml">
+                <div class="oe_structure"/>
+                <h1>Hello Job</h1>
+            </field>
+        </record>
 
-    <!-- Tree View for Backend -->
-    <record id="view_job_posting_tree" model="ir.ui.view">
-        <field name="name">job.postings.tree</field>
-        <field name="model">job.postings</field>
-        <field name="arch" type="xml">
-            <tree>
-                <field name="job_id"/>
-                <field name="job_title"/>
-                <field name="company"/>
-                <field name="location"/>
-                <field name="status"/>
-                <field name="posted_date"/>
-            </tree>
-        </field>
-    </record>
+        <!-- Define the Action for the Page -->
+        <record id="action_job_page" model="ir.actions.act_url">
+            <field name="name">Job Page</field>
+            <field name="url">/job</field>
+            <field name="type">ir.actions.act_url</field>
+        </record>
 
-    <!-- Form View for Backend -->
-    <record id="view_job_posting_form" model="ir.ui.view">
-        <field name="name">job.postings.form</field>
-        <field name="model">job.postings</field>
-        <field name="arch" type="xml">
-            <form string="Job Posting">
-                <sheet>
-                    <group>
-                        <field name="job_id"/>
-                        <field name="job_title"/>
-                        <field name="company"/>
-                        <field name="location"/>
-                        <field name="experience"/>
-                        <field name="responsibilities"/>
-                        <field name="requirement"/>
-                        <field name="skills"/>
-                        <field name="status"/>
-                        <field name="workplace_type"/>
-                        <field name="shift"/>
-                        <field name="salary"/>
-                        <field name="posted_date"/>
-                        <field name="joining_tentative_date"/>
-                    </group>
-                </sheet>
-            </form>
-        </field>
-    </record>
-
-    <!-- Action Window -->
-    <record id="action_job_posting" model="ir.actions.act_window">
-        <field name="name">Job Postings</field>
-        <field name="res_model">job.postings</field>
-        <field name="view_mode">tree,form</field>
-    </record>
-
-    <!-- Menu Items -->
-    <menuitem id="menu_job_postings_root" name="Job Portal"/>
-    <menuitem id="menu_job_postings" name="Job Postings" parent="menu_job_postings_root"/>
-    <menuitem id="menu_job_postings_action" name="All Job Postings" parent="menu_job_postings"
-              action="action_job_posting"/>
-
-    <!-- Website: Job Listings Page -->
-    <template id="job_listings_template" name="Job Listings Page">
-        <t t-call="website.layout">
-            <div class="container mt-5 mb-5">
-                <h1 class="mb-4">Current Job Openings</h1>
-                <div class="row">
-                    <t t-foreach="jobs" t-as="job">
-                        <div class="col-md-6 mb-4">
-                            <div class="card shadow-sm p-3 h-100">
-                                <h4><a t-att-href="'/jobs/%s' % job.id"><t t-esc="job.job_title"/></a></h4>
-                                <p><strong>Company:</strong> <t t-esc="job.company"/></p>
-                                <p><strong>Location:</strong> <t t-esc="job.location"/></p>
-                                <p><strong>Status:</strong> <t t-esc="job.status"/></p>
-                            </div>
-                        </div>
-                    </t>
-                </div>
-            </div>
-        </t>
-    </template>
-
-    <!-- Website: Job Detail Page -->
-    <template id="job_detail_template" name="Job Detail Page">
-        <t t-call="website.layout">
-            <div class="container mt-5 mb-5">
-                <h1><t t-esc="job.job_title"/></h1>
-                <p><strong>Company:</strong> <t t-esc="job.company"/></p>
-                <p><strong>Location:</strong> <t t-esc="job.location"/></p>
-                <p><strong>Experience:</strong> <t t-esc="job.experience"/></p>
-                <p><strong>Workplace Type:</strong> <t t-esc="job.workplace_type"/></p>
-                <p><strong>Shift:</strong> <t t-esc="job.shift"/></p>
-                <p><strong>Salary:</strong> ₹ <t t-esc="job.salary"/></p>
-                <p><strong>Skills Required:</strong> <t t-esc="job.skills"/></p>
-                <p><strong>Responsibilities:</strong></p>
-                <p><t t-esc="job.responsibilities"/></p>
-                <a t-att-href="'/jobs/apply/%s' % job.id" class="btn btn-primary mt-3">Apply Now</a>
-            </div>
-        </t>
-    </template>
-
-    <!-- Website: Job Application Form -->
-    <template id="job_application_form_template" name="Job Application Form">
-        <t t-call="website.layout">
-            <div class="container mt-5 mb-5">
-                <h2>Apply for <t t-esc="job.job_title"/></h2>
-                <form action="/jobs/apply/submit" method="POST">
-                    <input type="hidden" name="job_id" t-att-value="job.id"/>
-                    <div class="form-group">
-                        <label for="name">Full Name</label>
-                        <input type="text" name="name" class="form-control" required="required"/>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" name="email" class="form-control" required="required"/>
-                    </div>
-                    <div class="form-group">
-                        <label for="resume">Resume (Paste your resume or a URL)</label>
-                        <textarea name="resume" class="form-control" rows="5"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-success mt-3">Submit Application</button>
-                </form>
-            </div>
-        </t>
-    </template>
-
+        <!-- Create a Menu item to access the Job Page -->
+        <menuitem id="menu_job" name="Job" sequence="10"/>
+        <menuitem id="menu_job_page" name="Job Page" parent="menu_job" action="action_job_page"/>
+    </data>
 </odoo>

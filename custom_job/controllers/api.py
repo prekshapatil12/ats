@@ -369,23 +369,3 @@ class JobAPIController(http.Controller):
                 'status': 500,
                 'error': f"Internal Server Error: {str(e)}"
             }
-   
-    @http.route('/jobs', auth='public', website=True)
-    def job_listings(self):
-        jobs = request.env['job.postings'].sudo().search([('status', '=', 'open')])
-        return request.render('custom_job.job_postings_views', {'jobs': jobs})
-
-    @http.route('/jobs/<int:job_id>', auth='public', website=True)
-    def job_detail(self, job_id):
-        job = request.env['job.postings'].sudo().browse(job_id)
-        return request.render('custom_job.job_postings_views', {'job': job})
-
-    @http.route('/jobs/apply/<int:job_id>', auth='public', website=True)
-    def apply_form(self, job_id):
-        job = request.env['job.postings'].sudo().browse(job_id)
-        return request.render('custom_job.job_postings_views', {'job': job})
-
-    @http.route('/jobs/apply/submit', type='http', auth='public', website=True, csrf=False)
-    def apply_submit(self, **post):
-        # Handle form logic here (store application, email, etc.)
-        return request.redirect('/jobs')
