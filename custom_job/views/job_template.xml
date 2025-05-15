@@ -1,46 +1,12 @@
-
-
 <odoo>
-  <template id="job_page_template" name="Job Page">
-    <t t-call="website.layout">
-      <div class="container mt-4">
-        <h1 class="mb-4">Available Job Postings</h1>
-
-        <t t-set="jobs" t-value="request.env['job.postings'].sudo().search([])"/>
-
-        <table class="table table-striped table-hover">
-          <thead class="thead-dark">
-            <tr>
-              <th>Job ID</th>
-              <th>Title</th>
-              <th>Company</th>
-              <th>Location</th>
-              <th>Experience</th>
-              <th>Skills</th>
-              <th>Status</th>
-              <th>Workplace</th>
-              <th>Posted Date</th>
-              <th>Joining Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            <t t-foreach="jobs" t-as="job">
-              <tr>
-                <td><t t-esc="job.job_id" /></td>
-                <td><t t-esc="job.job_title" /></td>
-                <td><t t-esc="job.company" /></td>
-                <td><t t-esc="job.location" /></td>
-                <td><t t-esc="job.experience" /></td>
-                <td><t t-esc="job.skills" /></td>
-                <td><t t-esc="job.status" /></td>
-                <td><t t-esc="job.workplace_type" /></td>
-                <td><t t-esc="job.posted_date" /></td>
-                <td><t t-esc="job.joining_tentative_date" /></td>
-              </tr>
+    <data>
+        <!-- Job Page Template -->
+        <template id="job_page_template" name="Job Page">
+         <t t-call="website.layout">
+          <div class="container mt-4">
+          <h1>Hello Job Available</h1>
+          </div>
             </t>
-          </tbody>
-        </table>
-      </div>
-    </t>
-  </template>
+        </template>
+    </data>
 </odoo>
