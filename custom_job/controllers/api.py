@@ -71,33 +71,108 @@ class JobAPIController(http.Controller):
                 'status': 500,
                 'error': f"Internal Server Error: {str(e)}"
             }
-          
-      
-      
-    @http.route('/api/jobs/<string:job_id>',type='json', auth='public', methods=['PUT'], csrf=False)
-    def put_job(self,job_id, **kwargs):
+    @http.route('/api/jobs/<string:job_id>', type='json', auth='public', methods=['PUT'], csrf=False)
+    def update_job(self, job_id, **kwargs):
+        """
+        Update an existing job posting using the custom job_id.
+        """
         try:
-            job_data = json.loads(request.httprequest.data.decode('utff-8'))
+            # Parse the raw JSON body
+            job_data = json.loads(request.httprequest.data.decode('utf-8'))
             if not job_data:
-                return {'status': 400, 'error': 'No data provided in the request.'}
-            
-            job = request.env['job.posting'].sudo.search([('job_id', '=', job_id)],limit=1)
+                return {'status': 400, 'error': 'No data provided in the request body.'}
+            # Search for the job by custom job_id
+            job = request.env['job.postings'].sudo().search([('job_id', '=', job_id)], limit=1)
             if not job:
-                return {'status': 404, 'error': 'Job not found.'}
+                return {'status': 404, 'error': f"No job found with job_id '{job_id}'"}
+            # Fields allowed to be updated (from your model)
             allowed_fields = [
                 'job_title', 'experience', 'responsibilities',
                 'requirement', 'skills', 'status', 'workplace_type',
                 'shift', 'company', 'location', 'salary',
                 'posted_date', 'joining_tentative_date'
             ]
-            for field in allowed_fields:
-                if field in job_data:
-                    job.sudo().write({field: job_data[field]})
-                    
-                return {'status': 200, 'message': 'Job updated successfully.'}
-        
+            # Prepare values to update
+            update_values = {field: job_data[field] for field in allowed_fields if field in job_data}
+            if not update_values:
+                return {'status': 400, 'error': 'No valid fields provided for update.'}
+            # Write updates to the job record
+            job.write(update_values)
+            return {
+                'status': 200,
+                'message': f"Job with job_id '{job_id}' updated successfully.",
+                'updated_fields': list(update_values.keys())
+            }
         except Exception as e:
-            return {'status': 500, 'error': f"Internal Server Error:str{e}"}
+            return {'status': 500, 'error': f"Internal Server Error: {str(e)}"}
+        """
+        Update an existing job posting using the custom job_id field.
+        Expects a JSON body with fields to update.
+        """
+        try:
+            # Parse JSON request body
+            job_data = request.jsonrequest
+            if not job_data:
+                return {'status': 400, 'error': 'No data provided in the request body.'}
+            # Search for the job using job_id
+            job = request.env['job.postings'].sudo().search([('job_id', '=', job_id)], limit=1)
+            if not job:
+                return {'status': 404, 'error': f"No job found with job_id '{job_id}'"}
+            # Define updatable fields from your model
+            updatable_fields = [
+                'job_title', 'experience', 'responsibilities',
+                'requirement', 'skills', 'status', 'workplace_type',
+                'shift', 'company', 'location', 'salary',
+                'posted_date', 'joining_tentative_date'
+            ]
+            # Build the dictionary with only valid fields present in request
+            update_values = {field: job_data[field] for field in updatable_fields if field in job_data}
+            if not update_values:
+                return {'status': 400, 'error': 'No valid fields provided to update.'}
+            # Write (update) the job
+            job.write(update_values)
+            return {
+                'status': 200,
+                'message': f"Job with job_id '{job_id}' updated successfully.",
+                'updated_fields': list(update_values.keys())
+            }
+        except Exception as e:
+            return {'status': 500, 'error': f"Internal Server Error: {str(e)}"}
+        """
+        Create a new job posting (expects raw JSON).
+        """
+        try:
+            # Safely parse raw JSON from the body
+            job_data = json.loads(request.httprequest.data.decode('utf-8'))
+            job = request.env['job.postings'].sudo().browse(job_id)
+            if not job.exists():
+                return {
+                    'status': 404,
+                    'error': f'Job with ID {job_id} not found'
+                }
+            updatable_fields = [
+                'job_title', 'experience', 'responsibilities',
+                'requirement', 'skills', 'status', 'workplace_type',
+                'shift', 'company', 'location', 'salary',
+                'posted_date', 'joining_tentative_date'
+            ]
+            update_values = {key: job_data[key] for key in updatable_fields if key in job_data}
+            if not update_values:
+                return {
+                    'status': 400,
+                    'error': 'No valid fields provided for update'
+                }
+            job.write(update_values)
+            return {
+                'status': 201,
+                'message': 'Job Updated successfully',
+                'job_id': job.id
+            }
+        except Exception as e:
+            return {
+                'status': 500,
+                'error': f"Internal Server Error: {str(e)}"
+            }      
         
     @http.route('/api/jobs/<string:job_id>', type='json', auth='public', methods=['PATCH'], csrf=False)
     def update_job(self, job_id, **kwargs):
