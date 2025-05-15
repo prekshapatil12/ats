@@ -11,11 +11,15 @@
             <tr>
               <th>Job ID</th>
               <th>Title</th>
-              <th>Company</th>
-              <th>Location</th>
               <th>Experience</th>
+              <th>Responsibilities</th>
+              <th>Requirements</th>
+              <th>Shifts</th>
+              <th>Salary</th>
               <th>Skills</th>
               <th>Status</th>
+              <th>Company</th>
+              <th>Location</th>
               <th>Workplace</th>
               <th>Posted Date</th>
               <th>Joining Date</th>
@@ -26,11 +30,15 @@
               <tr>
                 <td><t t-esc="job.job_id" /></td>
                 <td><t t-esc="job.job_title" /></td>
-                <td><t t-esc="job.company" /></td>
-                <td><t t-esc="job.location" /></td>
                 <td><t t-esc="job.experience" /></td>
+                <td><t t-esc="job.responsibilities" /></td>
+                <td><t t-esc="job.requirement" /></td>
+                <td><t t-esc="job.shift" /></td>
+                 <td><t t-esc="job.salary" /></td>
                 <td><t t-esc="job.skills" /></td>
                 <td><t t-esc="job.status" /></td>
+                <td><t t-esc="job.company" /></td>
+                <td><t t-esc="job.location" /></td>
                 <td><t t-esc="job.workplace_type" /></td>
                 <td><t t-esc="job.posted_date" /></td>
                 <td><t t-esc="job.joining_tentative_date" /></td>
