@@ -43,3 +43,4 @@ class JobPosting(models.Model):
     salary = fields.Char(string="Salary")
     posted_date = fields.Date(string="Posted Date")
     joining_tentative_date = fields.Date(string="Joining Tentative Date")
+6
