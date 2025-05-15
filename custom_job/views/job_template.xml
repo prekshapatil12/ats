@@ -2,11 +2,7 @@
     <data>
         <!-- Job Page Template -->
         <template id="job_page_template" name="Job Page">
-         <t t-call="website.layout">
-          <div class="container mt-4">
-          <h1>Hello Job Available</h1>
-          </div>
-            </t>
+            <h1>Hello Job Available</h1>
         </template>
     </data>
 </odoo>
