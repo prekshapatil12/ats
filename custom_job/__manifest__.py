@@ -18,7 +18,8 @@ Features:
     'depends': ['base', 'website'],
     'data': [
         'security/ir.model.access.csv',
-        'views/job_template.xml',  # Add the view file here
+        'views/job_template.xml',
+        'views/job_form_template.xml',# Add the view file here
     ],
     'assets': {
         'web.assets_frontend': [

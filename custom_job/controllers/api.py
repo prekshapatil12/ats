@@ -475,6 +475,26 @@ class JobAPIController(http.Controller):
             }
         
 
-    @http.route('/job', type='http', auth='public', website=True)
-    def job_page(self, **kw):
-        return request.render('custom_job.job_page_template')
+    @http.route(['/post_job'], type='http', auth='public', website=True)
+    def post_job_form(self, **kwargs):
+        return request.render('your_module_name.post_job_form_template', {})
+
+    @http.route(['/submit_job'], type='http', auth='public', website=True, csrf=False)
+    def submit_job_form(self, **post):
+        request.env['job.postings'].sudo().create({
+            'job_id': post.get('job_id'),
+            'job_title': post.get('job_title'),
+            'experience': post.get('experience'),
+            'responsibilities': post.get('responsibilities'),
+            'requirement': post.get('requirement'),
+            'shift': post.get('shift'),
+            'salary': post.get('salary'),
+            'skills': post.get('skills'),
+            'status': post.get('status'),
+            'company': post.get('company'),
+            'location': post.get('location'),
+            'workplace_type': post.get('workplace_type'),
+            'posted_date': post.get('posted_date'),
+            'joining_tentative_date': post.get('joining_tentative_date'),
+        })
+        return request.redirect('/jobs') 
