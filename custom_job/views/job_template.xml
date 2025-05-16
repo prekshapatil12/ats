@@ -5,7 +5,7 @@
         .my-custom-table {
           width: 100%;
           border-collapse: collapse;
-          background-color: #ffffff;
+          background-color: red;
           color: #343a40;
         }
         .my-custom-table thead {
