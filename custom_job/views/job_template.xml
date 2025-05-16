@@ -2,7 +2,7 @@
   <template id="job_page_template" name="Job Page">
     <t t-call="website.layout">
     <style type="text/css">
-        .my-custom-table {
+        .my-custom-table table{
           width: 100%;
           border-collapse: collapse;
           background-color: red;
