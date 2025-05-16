@@ -5,11 +5,11 @@
         .my-custom-table {
           width: 100%;
           border-collapse: collapse;
-          background-color: rgb(253, 69, 13);
+          background-color: #ffffff;
           color: #343a40;
         }
-        .my-custom-table thead {
-          background-color:rgb(253, 69, 13);
+        .my-custom-table th {
+          background-color: #0d6efd;
           color: #ffffff;
           padding: 0.75rem;
           text-align: left;
@@ -22,15 +22,16 @@
         .my-custom-table tr:nth-child(even) {
           background-color: #f9fbfd;
         }
-        .my-custom-table tr:hover {
-          background-color: #f2f6fc;
+        .my-custom-table td:hover {
+          background-color:rgb(73, 229, 247);
         }
       </style>
-      <div class="my-custom-table">
+
+      <div class="container mt-4">
         <h1 class="mb-4">Available Job Postings</h1>
 
         <!-- Create Job Button -->
-        <div class="my-custom-table">
+        <div class="mb-3">
           <a href="/create-job" class="btn btn-primary">+ Create Job</a>
         </div>
 
