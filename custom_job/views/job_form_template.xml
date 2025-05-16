@@ -131,14 +131,14 @@
 
               const result = await response.json();
 
-              if (result.status === 200) {
+              if (result.status === 201) {
                 alert("✅ Job created successfully!");
                 form.reset();
               } else {
                 alert("❌ Error: " + (result.error || "Unknown error"));
               }
             } catch (error) {
-                alert("✅ Job created successfully!");
+              alert("❌ Request failed: " + error.message);
             }
           });
         });
