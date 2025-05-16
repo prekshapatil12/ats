@@ -8,7 +8,7 @@
           background-color: #ffffff;
           color: #343a40;
         }
-        .my-custom-table th {
+        .my-custom-table thead {
           background-color: #0d6efd;
           color: #ffffff;
           padding: 0.75rem;
@@ -37,7 +37,7 @@
         <t t-set="jobs" t-value="request.env['job.postings'].sudo().search([])"/>
 
         <table class="my-custom-table">
-          <thead class="thead-dark">
+          <thead class="my-custom-table">
             <tr>
               <th>Job ID</th>
               <th>Title</th>
