@@ -130,7 +130,7 @@
               });
 
               const result = await response.json();
-
+              console.log(result);
               if (result.status === 201) {
                 alert("✅ Job created successfully!");
                 form.reset();
