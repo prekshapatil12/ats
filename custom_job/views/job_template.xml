@@ -36,7 +36,7 @@
 
         <t t-set="jobs" t-value="request.env['job.postings'].sudo().search([])"/>
 
-        <table>
+        <table class="my-custom-table">
           <thead class="thead-dark">
             <tr>
               <th>Job ID</th>
