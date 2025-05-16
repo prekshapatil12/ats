@@ -2,7 +2,7 @@
   <template id="job_page_template" name="Job Page">
     <t t-call="website.layout">
     <style type="text/css">
-        .my-custom-table table{
+        .my-custom-table {
           width: 100%;
           border-collapse: collapse;
           background-color: rgb(253, 69, 13);
@@ -26,11 +26,11 @@
           background-color: #f2f6fc;
         }
       </style>
-      <div class="container mt-4">
+      <div class="my-custom-table">
         <h1 class="mb-4">Available Job Postings</h1>
 
         <!-- Create Job Button -->
-        <div class="mb-3">
+        <div class="my-custom-table">
           <a href="/create-job" class="btn btn-primary">+ Create Job</a>
         </div>
 
