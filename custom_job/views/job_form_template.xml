@@ -81,10 +81,7 @@
             <textarea name="requirement" class="form-control" rows="3"></textarea>
           </div>
 
-          <div class="col-12 text-center">
-            <button type="submit" class="btn btn-success btn-lg px-5">Submit Job</button>
-          </div>
-
+     
       </div>
     </t>
   </template>
