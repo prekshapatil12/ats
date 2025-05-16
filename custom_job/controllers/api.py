@@ -478,3 +478,7 @@ class JobAPIController(http.Controller):
     @http.route('/job', type='http', auth='public', website=True)
     def job_page(self, **kw):
         return request.render('custom_job.job_page_template')
+
+    @http.route('/create-job', type='http', auth='public', website=True)
+    def create_job_form(self, **kw):
+        return request.render('custom_job.job_form_template')
