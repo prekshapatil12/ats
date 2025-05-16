@@ -1,88 +1,103 @@
 <odoo>
   <template id="job_form_template" name="Job Form">
     <t t-call="website.layout">
-      <div class="container mt-4">
-        <h2 class="mb-4">Create a Job</h2>
-        <form action="/submit-job" method="POST" class="form">
-          <div class="form-group mb-3">
-            <label>Job ID</label>
-            <input type="text" name="job_id" class="form-control" required/>
-          </div>
+      <div class="container my-5">
+        <div class="card shadow-lg rounded-3">
+          <div class="card-body p-5">
+            <h2 class="mb-4 text-center text-primary">Create a New Job Posting</h2>
 
-          <div class="form-group mb-3">
-            <label>Job Title</label>
-            <input type="text" name="job_title" class="form-control" required/>
-          </div>
+            <form action="/submit-job" method="POST" class="row g-4">
 
-          <div class="form-group mb-3">
-            <label>Experience</label>
-            <input type="text" name="experience" class="form-control"/>
-          </div>
+              <!-- Section: Basic Details -->
+              <div class="col-md-6">
+                <label class="form-label">Job ID<span class="text-danger">*</span></label>
+                <input type="text" name="job_id" class="form-control" required/>
+              </div>
 
-          <div class="form-group mb-3">
-            <label>Responsibilities</label>
-            <textarea name="responsibilities" class="form-control"></textarea>
-          </div>
+              <div class="col-md-6">
+                <label class="form-label">Job Title<span class="text-danger">*</span></label>
+                <input type="text" name="job_title" class="form-control" required/>
+              </div>
 
-          <div class="form-group mb-3">
-            <label>Requirements</label>
-            <textarea name="requirement" class="form-control"></textarea>
-          </div>
+              <div class="col-md-6">
+                <label class="form-label">Company</label>
+                <input type="text" name="company" class="form-control"/>
+              </div>
 
-          <div class="form-group mb-3">
-            <label>Skills</label>
-            <input type="text" name="skills" class="form-control"/>
-          </div>
+              <div class="col-md-6">
+                <label class="form-label">Location</label>
+                <input type="text" name="location" class="form-control"/>
+              </div>
 
-          <div class="form-group mb-3">
-            <label>Status</label>
-            <select name="status" class="form-control">
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
-            </select>
-          </div>
+              <!-- Section: Job Info -->
+              <div class="col-md-6">
+                <label class="form-label">Experience</label>
+                <input type="text" name="experience" class="form-control"/>
+              </div>
 
-          <div class="form-group mb-3">
-            <label>Workplace Type</label>
-            <select name="workplace_type" class="form-control">
-              <option value="onsite">On-site</option>
-              <option value="remote">Remote</option>
-              <option value="hybrid">Hybrid</option>
-            </select>
-          </div>
+              <div class="col-md-6">
+                <label class="form-label">Salary</label>
+                <input type="text" name="salary" class="form-control"/>
+              </div>
 
-          <div class="form-group mb-3">
-            <label>Shift</label>
-            <input type="text" name="shift" class="form-control"/>
-          </div>
+              <div class="col-md-6">
+                <label class="form-label">Shift</label>
+                <input type="text" name="shift" class="form-control"/>
+              </div>
 
-          <div class="form-group mb-3">
-            <label>Company</label>
-            <input type="text" name="company" class="form-control"/>
-          </div>
+              <div class="col-md-6">
+                <label class="form-label">Workplace Type</label>
+                <select name="workplace_type" class="form-select">
+                  <option value="">-- Select --</option>
+                  <option value="onsite">On-site</option>
+                  <option value="remote">Remote</option>
+                  <option value="hybrid">Hybrid</option>
+                </select>
+              </div>
 
-          <div class="form-group mb-3">
-            <label>Location</label>
-            <input type="text" name="location" class="form-control"/>
-          </div>
+              <div class="col-md-6">
+                <label class="form-label">Status</label>
+                <select name="status" class="form-select">
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                </select>
+              </div>
 
-          <div class="form-group mb-3">
-            <label>Salary</label>
-            <input type="text" name="salary" class="form-control"/>
-          </div>
+              <!-- Section: Dates -->
+              <div class="col-md-6">
+                <label class="form-label">Posted Date</label>
+                <input type="date" name="posted_date" class="form-control"/>
+              </div>
 
-          <div class="form-group mb-3">
-            <label>Posted Date</label>
-            <input type="date" name="posted_date" class="form-control"/>
-          </div>
+              <div class="col-md-6">
+                <label class="form-label">Joining Tentative Date</label>
+                <input type="date" name="joining_tentative_date" class="form-control"/>
+              </div>
 
-          <div class="form-group mb-4">
-            <label>Joining Tentative Date</label>
-            <input type="date" name="joining_tentative_date" class="form-control"/>
-          </div>
+              <!-- Section: Descriptions -->
+              <div class="col-12">
+                <label class="form-label">Responsibilities</label>
+                <textarea name="responsibilities" class="form-control" rows="3"></textarea>
+              </div>
 
-          <button type="submit" class="btn btn-success">Submit Job</button>
-        </form>
+              <div class="col-12">
+                <label class="form-label">Requirements</label>
+                <textarea name="requirement" class="form-control" rows="3"></textarea>
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">Skills</label>
+                <input type="text" name="skills" class="form-control"/>
+              </div>
+
+              <!-- Submit Button -->
+              <div class="col-12 text-center">
+                <button type="submit" class="btn btn-success btn-lg px-5">Submit Job</button>
+              </div>
+
+            </form>
+          </div>
+        </div>
       </div>
     </t>
   </template>
