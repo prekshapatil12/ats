@@ -1,12 +1,11 @@
+
+
 <odoo>
   <template id="job_form_template" name="Job Form">
     <t t-call="website.layout">
       <div class="container mt-5 mb-5">
         <h2 class="mb-4 text-center">Create a Job</h2>
-        <form action="/submit-job" method="POST" style="display: flex; flex-wrap: wrap; gap: 20px;">
-          <!-- CSRF Token -->
-          <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-
+        <form id="jobForm" style="display: flex; flex-wrap: wrap; gap: 20px;">
           <!-- Job ID -->
           <div style="flex: 1 1 45%;">
             <label for="job_id">Job ID <span style="color: red;">*</span></label><br/>
@@ -106,6 +105,45 @@
           </div>
         </form>
       </div>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          const form = document.getElementById('jobForm');
+
+          form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+            const data = {};
+
+            formData.forEach((value, key) => {
+              data[key] = value;
+            });
+
+            try {
+              const response = await fetch("/api/jobs", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+              });
+
+              const result = await response.json();
+
+              if (result.status === 201) {
+                alert("✅ Job created successfully!");
+                form.reset();
+              } else {
+                alert("❌ Error: " + (result.error || "Unknown error"));
+              }
+            } catch (error) {
+              alert("❌ Request failed: " + error.message);
+            }
+          });
+        });
+      </script>
     </t>
   </template>
 </odoo>
+
