@@ -1,10 +1,96 @@
 <odoo>
   <template id="job_form_template" name="Job Form">
     <t t-call="website.layout">
-      <div class="container my-5">
-        <h2 class="mb-4 text-center text-primary">Create a Job</h2>
+      <div class="container mt-5 mb-5">
+        <h2 class="mb-4 text-center">Create a Job</h2>
 
-     
+        <form action="/submit-job" method="POST">
+          <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+            
+            <div style="flex: 1 1 45%;">
+              <label>Job ID *</label><br/>
+              <input type="text" name="job_id" required style="width: 100%;"/>
+            </div>
+
+            <div style="flex: 1 1 45%;">
+              <label>Job Title *</label><br/>
+              <input type="text" name="job_title" required style="width: 100%;"/>
+            </div>
+
+            <div style="flex: 1 1 45%;">
+              <label>Experience</label><br/>
+              <input type="text" name="experience" style="width: 100%;"/>
+            </div>
+
+            <div style="flex: 1 1 45%;">
+              <label>Shift</label><br/>
+              <input type="text" name="shift" style="width: 100%;"/>
+            </div>
+
+            <div style="flex: 1 1 45%;">
+              <label>Company</label><br/>
+              <input type="text" name="company" style="width: 100%;"/>
+            </div>
+
+            <div style="flex: 1 1 45%;">
+              <label>Location</label><br/>
+              <input type="text" name="location" style="width: 100%;"/>
+            </div>
+
+            <div style="flex: 1 1 45%;">
+              <label>Salary</label><br/>
+              <input type="text" name="salary" style="width: 100%;"/>
+            </div>
+
+            <div style="flex: 1 1 45%;">
+              <label>Skills</label><br/>
+              <input type="text" name="skills" style="width: 100%;"/>
+            </div>
+
+            <div style="flex: 1 1 45%;">
+              <label>Status</label><br/>
+              <select name="status" style="width: 100%;">
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+              </select>
+            </div>
+
+            <div style="flex: 1 1 45%;">
+              <label>Workplace Type</label><br/>
+              <select name="workplace_type" style="width: 100%;">
+                <option value="onsite">On-site</option>
+                <option value="remote">Remote</option>
+                <option value="hybrid">Hybrid</option>
+              </select>
+            </div>
+
+            <div style="flex: 1 1 45%;">
+              <label>Posted Date</label><br/>
+              <input type="date" name="posted_date" style="width: 100%;"/>
+            </div>
+
+            <div style="flex: 1 1 45%;">
+              <label>Joining Tentative Date</label><br/>
+              <input type="date" name="joining_tentative_date" style="width: 100%;"/>
+            </div>
+
+            <div style="flex: 1 1 100%;">
+              <label>Responsibilities</label><br/>
+              <textarea name="responsibilities" rows="3" style="width: 100%;"></textarea>
+            </div>
+
+            <div style="flex: 1 1 100%;">
+              <label>Requirement</label><br/>
+              <textarea name="requirement" rows="3" style="width: 100%;"></textarea>
+            </div>
+
+            <div style="flex: 1 1 100%; text-align: center; margin-top: 20px;">
+              <button type="submit" style="padding: 10px 30px; background-color: green; color: white; border: none; cursor: pointer;">
+                Submit Job
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
     </t>
   </template>
