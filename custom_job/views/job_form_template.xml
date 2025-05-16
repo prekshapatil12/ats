@@ -4,7 +4,7 @@
       <div class="container mt-5 mb-5">
         <h2 class="mb-4 text-center">Create a Job</h2>
 
-        <form action="/submit-job" method="POST">
+        <!-- <form action="/submit-job" method="POST">
           <div style="display: flex; flex-wrap: wrap; gap: 20px;">
             
             <div style="flex: 1 1 45%;">
@@ -90,7 +90,7 @@
               </button>
             </div>
           </div>
-        </form>
+        </form> -->
       </div>
     </t>
   </template>
