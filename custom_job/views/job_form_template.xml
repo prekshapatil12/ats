@@ -3,94 +3,108 @@
     <t t-call="website.layout">
       <div class="container mt-5 mb-5">
         <h2 class="mb-4 text-center">Create a Job</h2>
+        <form action="/submit-job" method="POST" style="display: flex; flex-wrap: wrap; gap: 20px;">
+          <!-- CSRF Token -->
+          <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
 
-        <!-- <form action="/submit-job" method="POST">
-          <div style="display: flex; flex-wrap: wrap; gap: 20px;">
-            
-            <div style="flex: 1 1 45%;">
-              <label>Job ID *</label><br/>
-              <input type="text" name="job_id" required style="width: 100%;"/>
-            </div>
-
-            <div style="flex: 1 1 45%;">
-              <label>Job Title *</label><br/>
-              <input type="text" name="job_title" required style="width: 100%;"/>
-            </div>
-
-            <div style="flex: 1 1 45%;">
-              <label>Experience</label><br/>
-              <input type="text" name="experience" style="width: 100%;"/>
-            </div>
-
-            <div style="flex: 1 1 45%;">
-              <label>Shift</label><br/>
-              <input type="text" name="shift" style="width: 100%;"/>
-            </div>
-
-            <div style="flex: 1 1 45%;">
-              <label>Company</label><br/>
-              <input type="text" name="company" style="width: 100%;"/>
-            </div>
-
-            <div style="flex: 1 1 45%;">
-              <label>Location</label><br/>
-              <input type="text" name="location" style="width: 100%;"/>
-            </div>
-
-            <div style="flex: 1 1 45%;">
-              <label>Salary</label><br/>
-              <input type="text" name="salary" style="width: 100%;"/>
-            </div>
-
-            <div style="flex: 1 1 45%;">
-              <label>Skills</label><br/>
-              <input type="text" name="skills" style="width: 100%;"/>
-            </div>
-
-            <div style="flex: 1 1 45%;">
-              <label>Status</label><br/>
-              <select name="status" style="width: 100%;">
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
-              </select>
-            </div>
-
-            <div style="flex: 1 1 45%;">
-              <label>Workplace Type</label><br/>
-              <select name="workplace_type" style="width: 100%;">
-                <option value="onsite">On-site</option>
-                <option value="remote">Remote</option>
-                <option value="hybrid">Hybrid</option>
-              </select>
-            </div>
-
-            <div style="flex: 1 1 45%;">
-              <label>Posted Date</label><br/>
-              <input type="date" name="posted_date" style="width: 100%;"/>
-            </div>
-
-            <div style="flex: 1 1 45%;">
-              <label>Joining Tentative Date</label><br/>
-              <input type="date" name="joining_tentative_date" style="width: 100%;"/>
-            </div>
-
-            <div style="flex: 1 1 100%;">
-              <label>Responsibilities</label><br/>
-              <textarea name="responsibilities" rows="3" style="width: 100%;"></textarea>
-            </div>
-
-            <div style="flex: 1 1 100%;">
-              <label>Requirement</label><br/>
-              <textarea name="requirement" rows="3" style="width: 100%;"></textarea>
-            </div>
-
-            <div style="flex: 1 1 100%; text-align: center; margin-top: 20px;">
-              <button type="submit" style="padding: 10px 30px; background-color: green; color: white; border: none; cursor: pointer;">
-                Submit Job
-              </button>
-            </div>
+          <!-- Job ID -->
+          <div style="flex: 1 1 45%;">
+            <label for="job_id">Job ID <span style="color: red;">*</span></label><br/>
+            <input id="job_id" type="text" name="job_id" required="required" style="width: 100%;"/>
           </div>
-        </form> -->
+
+          <!-- Job Title -->
+          <div style="flex: 1 1 45%;">
+            <label for="job_title">Job Title <span style="color: red;">*</span></label><br/>
+            <input id="job_title" type="text" name="job_title" required="required" style="width: 100%;"/>
+          </div>
+
+          <!-- Experience -->
+          <div style="flex: 1 1 45%;">
+            <label for="experience">Experience</label><br/>
+            <input id="experience" type="text" name="experience" style="width: 100%;"/>
+          </div>
+
+          <!-- Shift -->
+          <div style="flex: 1 1 45%;">
+            <label for="shift">Shift</label><br/>
+            <input id="shift" type="text" name="shift" style="width: 100%;"/>
+          </div>
+
+          <!-- Company -->
+          <div style="flex: 1 1 45%;">
+            <label for="company">Company</label><br/>
+            <input id="company" type="text" name="company" style="width: 100%;"/>
+          </div>
+
+          <!-- Location -->
+          <div style="flex: 1 1 45%;">
+            <label for="location">Location</label><br/>
+            <input id="location" type="text" name="location" style="width: 100%;"/>
+          </div>
+
+          <!-- Salary -->
+          <div style="flex: 1 1 45%;">
+            <label for="salary">Salary</label><br/>
+            <input id="salary" type="text" name="salary" style="width: 100%;"/>
+          </div>
+
+          <!-- Skills -->
+          <div style="flex: 1 1 45%;">
+            <label for="skills">Skills</label><br/>
+            <input id="skills" type="text" name="skills" style="width: 100%;"/>
+          </div>
+
+          <!-- Status -->
+          <div style="flex: 1 1 45%;">
+            <label for="status">Status</label><br/>
+            <select id="status" name="status" style="width: 100%;">
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+          </div>
+
+          <!-- Workplace Type -->
+          <div style="flex: 1 1 45%;">
+            <label for="workplace_type">Workplace Type</label><br/>
+            <select id="workplace_type" name="workplace_type" style="width: 100%;">
+              <option value="onsite">On‑site</option>
+              <option value="remote">Remote</option>
+              <option value="hybrid">Hybrid</option>
+            </select>
+          </div>
+
+          <!-- Posted Date -->
+          <div style="flex: 1 1 45%;">
+            <label for="posted_date">Posted Date</label><br/>
+            <input id="posted_date" type="date" name="posted_date" style="width: 100%;"/>
+          </div>
+
+          <!-- Joining Tentative Date -->
+          <div style="flex: 1 1 45%;">
+            <label for="joining_tentative_date">Joining Date</label><br/>
+            <input id="joining_tentative_date" type="date" name="joining_tentative_date" style="width: 100%;"/>
+          </div>
+
+          <!-- Responsibilities -->
+          <div style="flex: 1 1 100%;">
+            <label for="responsibilities">Responsibilities</label><br/>
+            <textarea id="responsibilities" name="responsibilities" rows="3" style="width: 100%;"></textarea>
+          </div>
+
+          <!-- Requirements -->
+          <div style="flex: 1 1 100%;">
+            <label for="requirement">Requirements</label><br/>
+            <textarea id="requirement" name="requirement" rows="3" style="width: 100%;"></textarea>
+          </div>
+
+          <!-- Submit Button -->
+          <div style="flex: 1 1 100%; text-align: center; margin-top: 20px;">
+            <button type="submit" style="padding: 10px 30px; background-color: green; color: white; border: none; cursor: pointer;">
+              Submit Job
+            </button>
+          </div>
+        </form>
       </div>
     </t>
   </template>
