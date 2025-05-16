@@ -4,8 +4,6 @@
       <div class="container my-5">
         <h2 class="mb-4 text-center text-primary">Create a Job</h2>
 
-        <form action="/submit-job" method="POST" class="row g-4">
-
           <div class="col-md-6">
             <label>Job ID<span class="text-danger">*</span></label>
             <input type="text" name="job_id" class="form-control" required/>
@@ -87,7 +85,6 @@
             <button type="submit" class="btn btn-success btn-lg px-5">Submit Job</button>
           </div>
 
-        </form>
       </div>
     </t>
   </template>
