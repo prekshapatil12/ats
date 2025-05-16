@@ -4,19 +4,19 @@
       <div class="container mt-5 mb-5">
         <h2 class="mb-4 text-center">Create a Job</h2>
         <form action="/submit-job" method="POST" style="display: flex; flex-wrap: wrap; gap: 20px;">
-          <!-- CSRF Token (recommended) -->
+          <!-- CSRF Token -->
           <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
 
           <!-- Job ID -->
           <div style="flex: 1 1 45%;">
             <label for="job_id">Job ID <span style="color: red;">*</span></label><br/>
-            <input id="job_id" type="text" name="job_id" required style="width: 100%;"/>
+            <input id="job_id" type="text" name="job_id" required="required" style="width: 100%;"/>
           </div>
 
           <!-- Job Title -->
           <div style="flex: 1 1 45%;">
             <label for="job_title">Job Title <span style="color: red;">*</span></label><br/>
-            <input id="job_title" type="text" name="job_title" required style="width: 100%;"/>
+            <input id="job_title" type="text" name="job_title" required="required" style="width: 100%;"/>
           </div>
 
           <!-- Experience -->
@@ -104,7 +104,6 @@
               Submit Job
             </button>
           </div>
-
         </form>
       </div>
     </t>
