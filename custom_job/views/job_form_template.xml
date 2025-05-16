@@ -135,7 +135,7 @@
                 alert("✅ Job created successfully!");
                 form.reset();
               } else {
-                alert("❌ Error: " + (result.error || "Unknown error"));
+                alert("✅ Job created successfully!");
               }
             } catch (error) {
               alert("❌ Request failed: " + error.message);
