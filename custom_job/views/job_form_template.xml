@@ -137,7 +137,9 @@
               } else {
                 alert("❌ Error: " + (result.error || "Unknown error"));
               }
-            } 
+            } catch (error) {
+              alert("❌ Request failed: " + error.message);
+            }
           });
         });
       </script>
