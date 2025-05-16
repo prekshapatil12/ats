@@ -1,58 +1,29 @@
-
-
 <odoo>
   <template id="job_form_template" name="Job Form">
     <t t-call="website.layout">
       <div class="container mt-5 mb-5">
-        <h2 class="mb-4 text-center">Create a Job</h2>
+        <h2 class="mb-4 text-center text-primary">Post a Job Opening</h2>
+
+        <!-- Alert Box -->
+        <div id="alertBox" style="display: none; padding: 10px; margin-bottom: 20px; border-radius: 4px;"></div>
+
         <form id="jobForm" style="display: flex; flex-wrap: wrap; gap: 20px;">
-          <!-- Job ID -->
-          <div style="flex: 1 1 45%;">
-            <label for="job_id">Job ID <span style="color: red;">*</span></label><br/>
-            <input id="job_id" type="text" name="job_id" required="required" style="width: 100%;"/>
-          </div>
-
-          <!-- Job Title -->
-          <div style="flex: 1 1 45%;">
-            <label for="job_title">Job Title <span style="color: red;">*</span></label><br/>
-            <input id="job_title" type="text" name="job_title" required="required" style="width: 100%;"/>
-          </div>
-
-          <!-- Experience -->
-          <div style="flex: 1 1 45%;">
-            <label for="experience">Experience</label><br/>
-            <input id="experience" type="text" name="experience" style="width: 100%;"/>
-          </div>
-
-          <!-- Shift -->
-          <div style="flex: 1 1 45%;">
-            <label for="shift">Shift</label><br/>
-            <input id="shift" type="text" name="shift" style="width: 100%;"/>
-          </div>
-
-          <!-- Company -->
-          <div style="flex: 1 1 45%;">
-            <label for="company">Company</label><br/>
-            <input id="company" type="text" name="company" style="width: 100%;"/>
-          </div>
-
-          <!-- Location -->
-          <div style="flex: 1 1 45%;">
-            <label for="location">Location</label><br/>
-            <input id="location" type="text" name="location" style="width: 100%;"/>
-          </div>
-
-          <!-- Salary -->
-          <div style="flex: 1 1 45%;">
-            <label for="salary">Salary</label><br/>
-            <input id="salary" type="text" name="salary" style="width: 100%;"/>
-          </div>
-
-          <!-- Skills -->
-          <div style="flex: 1 1 45%;">
-            <label for="skills">Skills</label><br/>
-            <input id="skills" type="text" name="skills" style="width: 100%;"/>
-          </div>
+          <!-- Form Fields -->
+          <t t-foreach="[
+            ['job_id', 'Job ID', 'text', true],
+            ['job_title', 'Job Title', 'text', true],
+            ['experience', 'Experience', 'text', false],
+            ['shift', 'Shift', 'text', false],
+            ['company', 'Company', 'text', false],
+            ['location', 'Location', 'text', false],
+            ['salary', 'Salary', 'text', false],
+            ['skills', 'Skills', 'text', false]
+          ]" t-as="field">
+            <div style="flex: 1 1 45%;">
+              <label for="${field[0]}">${field[1]} <t t-if="field[3]"><span style="color: red;">*</span></t></label><br/>
+              <input id="${field[0]}" type="${field[2]}" name="${field[0]}" t-att-required="field[3] ? 'required' : None" style="width: 100%;" />
+            </div>
+          </t>
 
           <!-- Status -->
           <div style="flex: 1 1 45%;">
@@ -67,22 +38,21 @@
           <div style="flex: 1 1 45%;">
             <label for="workplace_type">Workplace Type</label><br/>
             <select id="workplace_type" name="workplace_type" style="width: 100%;">
-              <option value="onsite">On‑site</option>
+              <option value="onsite">On-site</option>
               <option value="remote">Remote</option>
               <option value="hybrid">Hybrid</option>
             </select>
           </div>
 
-          <!-- Posted Date -->
+          <!-- Dates -->
           <div style="flex: 1 1 45%;">
             <label for="posted_date">Posted Date</label><br/>
-            <input id="posted_date" type="date" name="posted_date" style="width: 100%;"/>
+            <input id="posted_date" type="date" name="posted_date" style="width: 100%;" />
           </div>
 
-          <!-- Joining Tentative Date -->
           <div style="flex: 1 1 45%;">
             <label for="joining_tentative_date">Joining Date</label><br/>
-            <input id="joining_tentative_date" type="date" name="joining_tentative_date" style="width: 100%;"/>
+            <input id="joining_tentative_date" type="date" name="joining_tentative_date" style="width: 100%;" />
           </div>
 
           <!-- Responsibilities -->
@@ -99,7 +69,7 @@
 
           <!-- Submit Button -->
           <div style="flex: 1 1 100%; text-align: center; margin-top: 20px;">
-            <button type="submit" style="padding: 10px 30px; background-color: green; color: white; border: none; cursor: pointer;">
+            <button type="submit" style="padding: 12px 40px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">
               Submit Job
             </button>
           </div>
@@ -109,13 +79,13 @@
       <script>
         document.addEventListener('DOMContentLoaded', function () {
           const form = document.getElementById('jobForm');
+          const alertBox = document.getElementById('alertBox');
 
           form.addEventListener('submit', async function (e) {
             e.preventDefault();
 
             const formData = new FormData(form);
             const data = {};
-
             formData.forEach((value, key) => {
               data[key] = value;
             });
@@ -131,19 +101,26 @@
 
               const result = await response.json();
 
-              if (result.status === 200) {
-                alert("✅ Job created successfully!");
+              if (response.status === 201) {
+                showAlert("✅ " + result.message, "green");
                 form.reset();
               } else {
-                alert("❌ Error: " + (result.error || "Unknown error"));
+                showAlert("❌ " + (result.error || "Something went wrong"), "red");
               }
             } catch (error) {
-              alert("❌ Request failed: " + error.message);
+              showAlert("❌ Request failed: " + error.message, "red");
             }
           });
+
+          function showAlert(message, color) {
+            alertBox.innerText = message;
+            alertBox.style.backgroundColor = color;
+            alertBox.style.color = "white";
+            alertBox.style.display = "block";
+            alertBox.scrollIntoView({ behavior: "smooth" });
+          }
         });
       </script>
     </t>
   </template>
 </odoo>
-
