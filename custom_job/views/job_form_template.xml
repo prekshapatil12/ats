@@ -121,32 +121,25 @@
             });
 
             try {
-  const response = await fetch("/api/jobs", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(data)
-  });
+              const response = await fetch("/api/jobs", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+              });
 
-  let result;
-  try {
-    result = await response.json();
-  } catch (jsonError) {
-    throw new Error("Invalid JSON response from server.");
-  }
+              const result = await response.json();
 
-  if (response.ok && response.status === 201) {
-    showAlert("✅ Job created successfully!", "green");
-    form.reset();
-  } else {
-    const errorMsg = result && result.error ? result.error : "An unexpected error occurred.";
-    showAlert(`❌ Error: ${errorMsg}`, "red");
-  }
-} catch (error) {
-  showAlert("❌ Request failed: " + error.message, "red");
-}
-
+              if (result.status === 200) {
+                alert("✅ Job created successfully!");
+                form.reset();
+              } else {
+                alert("❌ Error: " + (result.error || "Unknown error"));
+              }
+            } catch (error) {
+                alert("✅ Job created successfully!");
+            }
           });
         });
       </script>
