@@ -8,8 +8,7 @@
         }
 
         .my-custom-table {
-          <!-- width: 100%; -->
-          width: max-content;  
+          width: 100%; 
           border-collapse: collapse;
           background-color: #ffffff;
           color: #343a40;
