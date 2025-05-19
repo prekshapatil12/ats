@@ -1,88 +1,111 @@
-<odoo>
-  <template id="job_page_template" name="Job Page">
-    <t t-call="website.layout">
-    <style type="text/css">
-        .my-custom-table {
-          width: 100%;
-          border-collapse: collapse;
-          background-color: #ffffff;
-          color: #343a40;
-        }
-        .my-custom-table th {
-          background-color: #0d6efd;
-          color: #ffffff;
-          padding: 0.75rem;
-          text-align: center;
-          border-bottom: 2px solid #dee2e6;
-        }
-        .my-custom-table td {
-          padding: 0.75rem;
-          border-bottom: 1px solid #dee2e6;
-        }
-        .my-custom-table tr:nth-child(even) {
-          background-color: #f9fbfd;
-        }
-        .my-custom-table td:hover {
-          background-color:rgb(73, 229, 247);
-        }
-        @media (max-width: 1200px) {
-        .my-custom-table {
-          font-size: 0.9rem;
+<t t-call="website.layout">
+  <style>
+    .responsive-table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #ffffff;
+      color: #343a40;
+      font-size: 1rem;
+    }
+
+    .responsive-table th,
+    .responsive-table td {
+      padding: 0.75rem;
+      border: 1px solid #dee2e6;
+      text-align: left;
+    }
+
+    .responsive-table th {
+      background-color: #0d6efd;
+      color: #ffffff;
+    }
+
+    /* ✅ Responsive stacked table */
+    @media (max-width: 768px) {
+      .responsive-table,
+      .responsive-table thead,
+      .responsive-table tbody,
+      .responsive-table th,
+      .responsive-table td,
+      .responsive-table tr {
+        display: block;
+        width: 100%;
+      }
+
+      .responsive-table thead {
+        display: none;
+      }
+
+      .responsive-table tr {
+        margin-bottom: 1rem;
+        border: 1px solid #dee2e6;
+        border-radius: 5px;
+        background: #f9fbfd;
+        padding: 1rem;
+      }
+
+      .responsive-table td {
+        position: relative;
+        padding-left: 50%;
+        text-align: left;
+        border: none;
+        border-bottom: 1px solid #dee2e6;
+      }
+
+      .responsive-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 1rem;
+        top: 0.75rem;
+        font-weight: bold;
+        color: #0d6efd;
+        white-space: nowrap;
       }
     }
-      </style>
+  </style>
 
-      <div class="container mt-4">
-        <h1 class="mb-4">Available Job Postings</h1>
+  <div class="container mt-4">
+    <h1 class="mb-4">Available Job Postings</h1>
 
-        <!-- Create Job Button -->
-        <div class="mb-3">
-          <a href="/create-job" class="btn btn-primary">+ Create Job</a>
-        </div>
-
-        <t t-set="jobs" t-value="request.env['job.postings'].sudo().search([])"/>
-
-        <table class="my-custom-table">
-          <thead class="my-custom-table">
-            <tr>
-              <th>Job ID</th>
-              <th>Title</th>
-              <th>Experience</th>
-              <th>Responsibilities</th>
-              <th>Requirements</th>
-              <th>Shifts</th>
-              <th>Salary</th>
-              <th>Skills</th>
-              <th>Status</th>
-              <th>Company</th>
-              <th>Location</th>
-              <th>Workplace</th>
-              <th>Posted Date</th>
-              <th>Joining Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            <t t-foreach="jobs" t-as="job">
-              <tr>
-                <td><t t-esc="job.job_id" /></td>
-                <td><t t-esc="job.job_title" /></td>
-                <td><t t-esc="job.experience" /></td>
-                <td><t t-esc="job.responsibilities" /></td>
-                <td><t t-esc="job.requirement" /></td>
-                <td><t t-esc="job.shift" /></td>
-                <td><t t-esc="job.salary" /></td>
-                <td><t t-esc="job.skills" /></td>
-                <td><t t-esc="job.status" /></td>
-                <td><t t-esc="job.company" /></td>
-                <td><t t-esc="job.location" /></td>
-                <td><t t-esc="job.workplace_type" /></td>
-                <td><t t-esc="job.posted_date" /></td>
-                <td><t t-esc="job.joining_tentative_date" /></td>
-              </tr>
-            </t>
-          </tbody>
-        </table>
-      </div>
-    </t>
-  </template>
-</odoo>
+    <table class="responsive-table">
+      <thead>
+        <tr>
+          <th>Job ID</th>
+          <th>Title</th>
+          <th>Experience</th>
+          <th>Responsibilities</th>
+          <th>Requirements</th>
+          <th>Shifts</th>
+          <th>Salary</th>
+          <th>Skills</th>
+          <th>Status</th>
+          <th>Company</th>
+          <th>Location</th>
+          <th>Workplace</th>
+          <th>Posted Date</th>
+          <th>Joining Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <t t-foreach="jobs" t-as="job">
+          <tr>
+            <td data-label="Job ID"><t t-esc="job.job_id" /></td>
+            <td data-label="Title"><t t-esc="job.job_title" /></td>
+            <td data-label="Experience"><t t-esc="job.experience" /></td>
+            <td data-label="Responsibilities"><t t-esc="job.responsibilities" /></td>
+            <td data-label="Requirements"><t t-esc="job.requirement" /></td>
+            <td data-label="Shifts"><t t-esc="job.shift" /></td>
+            <td data-label="Salary"><t t-esc="job.salary" /></td>
+            <td data-label="Skills"><t t-esc="job.skills" /></td>
+            <td data-label="Status"><t t-esc="job.status" /></td>
+            <td data-label="Company"><t t-esc="job.company" /></td>
+            <td data-label="Location"><t t-esc="job.location" /></td>
+            <td data-label="Workplace"><t t-esc="job.workplace_type" /></td>
+            <td data-label="Posted Date"><t t-esc="job.posted_date" /></td>
+            <td data-label="Joining Date"><t t-esc="job.joining_tentative_date" /></td>
+          </tr>
+        </t>
+      </tbody>
+    </table>
+  </div>
+</t>
