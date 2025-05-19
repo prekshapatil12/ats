@@ -12,11 +12,6 @@
             overflow-x: auto;
             word-wrap: break-word;
         }
-        .my-custom-table td,
-        .my-custom-table th {
-          word-break: break-word;
-          white-space: normal; /* Allow multi-line content */
-        }
         .my-custom-table th {
           background-color: #003366;
           color: #ffffff;
@@ -34,16 +29,11 @@
         
         @media (max-width: 1000px) {
           .my-custom-table,
-          .my-custom-table thead,
-          .my-custom-table tbody,
-          .my-custom-table th,
-          .my-custom-table td,
           .my-custom-table tr {
             display: block;
             width: 100%;
           }
           .my-custom-table td::before {
-            content: attr(data-label);
             position: absolute;
             left: 1rem;
             top: 0.75rem;
@@ -54,7 +44,7 @@
         }
       </style>
 
-      <div class="container mt-4", style="overflow-x: auto">
+      <div class="container mt-4">
         <h1 class="mb-4">Available Job Postings</h1>
 
         <!-- Create Job Button -->
