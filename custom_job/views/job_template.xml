@@ -3,7 +3,7 @@
     <t t-call="website.layout">
     <style type="text/css">
         .my-custom-table {
-          width: 100%;
+          width: 110%;
           border-collapse: collapse;
           background-color: #ffffff;
           color: #343a40;
@@ -12,7 +12,7 @@
           background-color: #0d6efd;
           color: #ffffff;
           padding: 0.75rem;
-          text-align: left;
+          text-align: center;
           border-bottom: 2px solid #dee2e6;
         }
         .my-custom-table td {
