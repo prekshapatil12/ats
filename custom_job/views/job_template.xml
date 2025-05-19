@@ -39,6 +39,16 @@
             display: block;
             width: 100%;
           }
+          .my-custom-table td::before {
+            content: attr(data-label);
+            position: absolute;
+            left: 1rem;
+            top: 0.75rem;
+            font-weight: 600;
+            color: #003366;
+            white-space: nowrap;
+          }
+        }
       </style>
 
       <div class="container mt-4">
