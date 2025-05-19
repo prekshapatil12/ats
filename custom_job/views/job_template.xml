@@ -2,80 +2,79 @@
   <template id="job_page_template" name="Job Page">
     <t t-call="website.layout">
       <style type="text/css">
-        .my-custom-table-wrapper {
-          overflow-x: auto;
-          width: 100%;
-        }
+  .my-custom-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+  }
 
-        .my-custom-table {
-          <!-- width: 100%; -->
-          width: max-content;
-          border-collapse: collapse;
-          background-color: #ffffff;
-          color: #343a40;
-          font-size: 1rem;
-          border-radius: 8px;
-          word-wrap: break-word;
-          table-layout: fixed;
-        }
+  .my-custom-table {
+    width: max-content;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    color: #343a40;
+    font-size: 1rem; /* Avoid huge font that breaks layout */
+    border-radius: 8px;
+    word-wrap: break-word;
+  }
 
-        .my-custom-table th {
-          background-color: #003366;
-          color: #ffffff;
-          text-align: left;
-          padding: 0.75rem;
-          font-weight: bold;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-        }
+  .my-custom-table th {
+    background-color: #003366;
+    color: #ffffff;
+    text-align: left;
+    padding: 0.75rem;
+    font-weight: bold;
+    white-space: nowrap;
+  }
 
-        .my-custom-table td {
-          padding: 0.75rem;
-          border-bottom: 1px solid #dee2e6;
-          word-break: break-word;
-          white-space: normal;
-        }
+  .my-custom-table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid #dee2e6;
+    word-break: break-word;
+    white-space: normal;
+  }
 
-        .my-custom-table tr:nth-child(even) {
-          background-color: #f9fbfd;
-        }
+  .my-custom-table tr:nth-child(even) {
+    background-color: #f9fbfd;
+  }
 
-        /* Mobile responsiveness */
-        @media (max-width: 1000px) {
-          .my-custom-table thead {
-            display: none;
-          }
+  /* Mobile responsiveness */
+  @media (max-width: 1000px) {
+    .my-custom-table thead {
+      display: none;
+    }
 
-          .my-custom-table, .my-custom-table tbody, .my-custom-table tr, .my-custom-table td {
-            display: block;
-            width: 100%;
-          }
+    .my-custom-table,
+    .my-custom-table tbody,
+    .my-custom-table tr,
+    .my-custom-table td {
+      display: block;
+      width: 100%;
+    }
 
-          .my-custom-table tr {
-            margin-bottom: 1rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 0.5rem;
-          }
+    .my-custom-table tr {
+      margin-bottom: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 0.5rem;
+    }
 
-          .my-custom-table td {
-            text-align: right;
-            position: relative;
-            padding-left: 50%;
-          }
+    .my-custom-table td {
+      text-align: right;
+      position: relative;
+      padding-left: 50%;
+    }
 
-          .my-custom-table td::before {
-            content: attr(data-label);
-            position: absolute;
-            left: 1rem;
-            top: 0.75rem;
-            white-space: nowrap;
-            font-weight: bold;
-            color: #003366;
-            text-align: left;
-          }
-        }
-      </style>
+    .my-custom-table td::before {
+      position: absolute;
+      left: 1rem;
+      top: 0.75rem;
+      white-space: nowrap;
+      font-weight: bold;
+      color: #003366;
+      text-align: left;
+    }
+  }
+</style>
 
       <div class="container mt-4">
         <h1 class="mb-4">Available Job Postings</h1>
