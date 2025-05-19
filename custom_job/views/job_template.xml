@@ -29,7 +29,7 @@
         .my-custom-table td:hover {
           background-color: #f1f1f1;
         }
-        @media (max-width: 768px) {
+        @media (max-width: 1000px) {
           .my-custom-table,
           .my-custom-table thead,
           .my-custom-table tbody,
