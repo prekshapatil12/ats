@@ -8,9 +8,14 @@
             background-color: #ffffff;
             color: #343a40;
             font-size: 1rem;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
             border-radius: 8px;
-            overflow: hidden;
+            overflow-x: auto;
+            word-wrap: break-word;
+        }
+        .my-custom-table td,
+        .my-custom-table th {
+          word-break: break-word;
+          white-space: normal; /* Allow multi-line content */
         }
         .my-custom-table th {
           background-color: #003366;
@@ -49,7 +54,7 @@
         }
       </style>
 
-      <div class="container mt-4">
+      <div class="container mt-4", style="overflow-x: auto">
         <h1 class="mb-4">Available Job Postings</h1>
 
         <!-- Create Job Button -->
