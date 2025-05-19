@@ -3,17 +3,21 @@
     <t t-call="website.layout">
     <style type="text/css">
         .my-custom-table {
-          width: 100%;
-          border-collapse: collapse;
-          background-color: #ffffff;
-          color: #343a40;
+           width: 100%;
+           border-collapse: collapse;
+            background-color: #ffffff;
+            color: #343a40;
+            font-size: 1rem;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
         }
         .my-custom-table th {
-          background-color: #0d6efd;
+          background-color: #003366;
           color: #ffffff;
+          text-align: left;
           padding: 0.75rem;
-          text-align: center;
-          border-bottom: 2px solid #dee2e6;
+          font-weight: bold;
         }
         .my-custom-table td {
           padding: 0.75rem;
@@ -23,8 +27,18 @@
           background-color: #f9fbfd;
         }
         .my-custom-table td:hover {
-          background-color:rgb(73, 229, 247);
+          background-color: #f1f1f1;
         }
+        @media (max-width: 768px) {
+          .my-custom-table,
+          .my-custom-table thead,
+          .my-custom-table tbody,
+          .my-custom-table th,
+          .my-custom-table td,
+          .my-custom-table tr {
+            display: block;
+            width: 100%;
+          }
       </style>
 
       <div class="container mt-4">
