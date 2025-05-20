@@ -81,9 +81,10 @@
         <h1 class="mb-4">Available Job Postings</h1>
 
         <!-- Create Job Button -->
-        <div class="mb-3", style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
+        <div class="mb-3" style="text-align: right;">
           <a href="/create-job" class="btn btn-primary">+ Create Job</a>
         </div>
+
 
         <t t-set="jobs" t-value="request.env['job.postings'].sudo().search([])"/>
 
