@@ -18,21 +18,21 @@
   }
 
   .my-custom-table th {
-    background-color: #003366;
-    color: #ffffff;
-    text-align: center;
-    padding: 0.75rem;
-    font-weight: bold;
-    white-space: nowrap;
-  }
+  background-color: #003366;
+  color: #ffffff;
+  text-align: center; /* ⬅️ CHANGED from left to center */
+  padding: 0.75rem;
+  font-weight: bold;
+  white-space: nowrap;
+}
 
   .my-custom-table td {
-    padding: 0.75rem;
-    text-align: center
-    border-bottom: 1px solid #dee2e6;
-    word-break: break-word;
-    white-space: normal;
-  }
+  padding: 0.75rem;
+  border-bottom: 1px solid #dee2e6;
+  word-break: break-word;
+  white-space: normal;
+  text-align: center; /* ⬅️ ADDED to center cell data */
+}
 
   .my-custom-table tr:nth-child(even) {
     background-color: #f9fbfd;
