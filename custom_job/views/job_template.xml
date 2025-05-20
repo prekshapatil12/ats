@@ -77,7 +77,6 @@
   }
 </style>
 
-      <div class="container mt-4">
         <h1 class="mb-4">Available Job Postings</h1>
 
         <!-- Create Job Button -->
@@ -85,7 +84,7 @@
           <a href="/create-job" class="btn btn-primary">+ Create Job</a>
         </div>
 
-
+      <div class="container mt-4">
         <t t-set="jobs" t-value="request.env['job.postings'].sudo().search([])"/>
 
         <div class="my-custom-table-wrapper">
