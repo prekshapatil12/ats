@@ -15,7 +15,7 @@
     background-color: #ffffff;
     color: #343a40;
     font-size: 1rem; /* Avoid huge font that breaks layout */
-    border-radius: 8px;
+    border-radius: 10px;
     word-wrap: break-word;
   }
 
@@ -26,15 +26,13 @@
   padding: 0.75rem;
   font-weight: bold;
   white-space: nowrap;
-  border-right: 1px solid #336699;
 }
 
   .my-custom-table td {
   padding: 0.75rem;
-  border-bottom: 1px solid #336699;
+  border-bottom: 2px solid #336699;
   word-break: break-word;
   white-space: normal;
-  border-right: 1px solid #dee2e6;
   text-align: center; 
 }
 
