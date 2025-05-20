@@ -22,7 +22,7 @@
   .my-custom-table th {
   background-color: #003366;
   color: #ffffff;
-  text-align: center; /* ⬅️ CHANGED from left to center */
+  text-align: center; 
   padding: 0.75rem;
   font-weight: bold;
   white-space: nowrap;
