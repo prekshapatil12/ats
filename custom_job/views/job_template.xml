@@ -5,7 +5,7 @@
   .my-custom-table-wrapper {
     width: 100%;
     overflow-x: auto;
-    padding-bottom: 1rem;
+    padding-bottom: 2rem;
     box-sizing: border-box;
   }
 
