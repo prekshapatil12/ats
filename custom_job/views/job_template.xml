@@ -51,6 +51,10 @@
       display: block;
       width: 100%;
     }
+    .my-custom-table th,
+    .my-custom-table td {
+     border-right: 1px solid #dee2e6; /* Light gray vertical lines */
+    }
 
     .my-custom-table tr {
       margin-bottom: 1rem;
