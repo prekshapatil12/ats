@@ -5,6 +5,8 @@
   .my-custom-table-wrapper {
     width: 100%;
     overflow-x: auto;
+    padding-bottom: 1rem;
+    box-sizing: border-box;
   }
 
   .my-custom-table {
@@ -29,7 +31,7 @@
 
   .my-custom-table td {
   padding: 0.75rem;
-  border-bottom: 1px solid #dee2e6;
+  border-bottom: 1px solid #336699;
   word-break: break-word;
   white-space: normal;
   border-right: 1px solid #dee2e6;
