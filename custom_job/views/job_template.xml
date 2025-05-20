@@ -28,6 +28,7 @@
 
   .my-custom-table td {
     padding: 0.75rem;
+    text-align: center
     border-bottom: 1px solid #dee2e6;
     word-break: break-word;
     white-space: normal;
@@ -58,20 +59,12 @@
       padding: 0.5rem;
     }
 
-    .my-custom-table td {
-      text-align: center;
-      position: relative;
-      padding-left: 50%;
-    }
-
     .my-custom-table td::before {
       position: absolute;
-      left: 1rem;
       top: 0.75rem;
       white-space: nowrap;
       font-weight: bold;
       color: #003366;
-      text-align: left;
     }
   }
 </style>
