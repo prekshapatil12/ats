@@ -45,16 +45,6 @@
     border-right: 1px solid #dee2e6; /* Light gray vertical lines */
   }
 
-  .responsibility-cell {
-    white-space: pre-wrap;          
-    word-break: break-word;          
-    height: 6em;                    
-    width: 300px;                   
-    padding: 10px;
-    vertical-align: top;
-    overflow-y: auto; 
-  }
-
   /* Mobile responsiveness */
   @media (max-width: 1000px) {
     .my-custom-table thead {
@@ -123,7 +113,7 @@
                   <td data-label="Job ID"><t t-esc="job.job_id" /></td>
                   <td data-label="Title"><t t-esc="job.job_title" /></td>
                   <td data-label="Experience"><t t-esc="job.experience" /></td>
-                  <td data-label="Responsibilities", style="max-height: 4.5em; overflow-y: auto; line-height: 1.5em;"><t t-esc="job.responsibilities" /></td>
+                  <td data-label="Responsibilities"><t t-esc="job.responsibilities" /></td>
                   <td data-label="Requirements"><t t-esc="job.requirement" /></td>
                   <td data-label="Shifts"><t t-esc="job.shift" /></td>
                   <td data-label="Salary"><t t-esc="job.salary" /></td>
