@@ -113,7 +113,7 @@
                   <td data-label="Job ID"><t t-esc="job.job_id" /></td>
                   <td data-label="Title"><t t-esc="job.job_title" /></td>
                   <td data-label="Experience"><t t-esc="job.experience" /></td>
-                  <td data-label="Responsibilities"><t t-esc="job.responsibilities" /></td>
+                  <td data-label="Responsibilities", style="max-height: 4.5em; overflow-y: auto; line-height: 1.5em;"><t t-esc="job.responsibilities" /></td>
                   <td data-label="Requirements"><t t-esc="job.requirement" /></td>
                   <td data-label="Shifts"><t t-esc="job.shift" /></td>
                   <td data-label="Salary"><t t-esc="job.salary" /></td>
