@@ -45,6 +45,16 @@
     border-right: 1px solid #dee2e6; /* Light gray vertical lines */
   }
 
+  .responsibility-cell {
+    white-space: pre-wrap;          
+    word-break: break-word;          
+    height: 6em;                    
+    width: 300px;                   
+    padding: 10px;
+    vertical-align: top;
+    overflow-y: auto; 
+  }
+
   /* Mobile responsiveness */
   @media (max-width: 1000px) {
     .my-custom-table thead {
@@ -94,7 +104,7 @@
                 <th>Job ID</th>
                 <th>Title</th>
                 <th>Experience</th>
-                <th style="max-height: 4.5em; overflow-y: auto; line-height: 1.5em;">Responsibilities</th>
+                <th>Responsibilities</th>
                 <th>Requirements</th>
                 <th>Shifts</th>
                 <th>Salary</th>
