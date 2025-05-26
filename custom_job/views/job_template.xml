@@ -94,7 +94,7 @@
                 <th>Job ID</th>
                 <th>Title</th>
                 <th>Experience</th>
-                <th>Responsibilities</th>
+                <th style="max-height: 4.5em; overflow-y: auto; line-height: 1.5em;">Responsibilities</th>
                 <th>Requirements</th>
                 <th>Shifts</th>
                 <th>Salary</th>
